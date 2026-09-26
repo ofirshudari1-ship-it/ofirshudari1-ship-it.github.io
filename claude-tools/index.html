@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>סקילים וסוכנים ל-Claude Code</title>
+<meta name="description" content="חמישה סקילים וארבעה סוכנים מותאמים-אישית ל-Claude Code, שנבנו מתוך שימוש יומיומי אמיתי בניהול כמה כלי תוכנה במקביל. חינם, בלי חשבון, קוד פתוח.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --border: #e2e5ee;
+    --ink: #1a1d29;
+    --ink-soft: #565b70;
+    --ink-faint: #8a90a6;
+    --accent: #5b56e0;
+    --accent-ink: #ffffff;
+    --shadow: 0 1px 2px rgba(20,20,40,.04), 0 10px 26px rgba(20,20,40,.06);
+    --radius: 16px;
+    --code-bg: #eef0f7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101219;
+      --surface: #171a24;
+      --border: #262a38;
+      --ink: #eef0f6;
+      --ink-soft: #a8adc0;
+      --ink-faint: #6f7488;
+      --accent: #8a86ff;
+      --accent-ink: #10101c;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px rgba(0,0,0,.4);
+      --code-bg: #1d2130;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Rubik", "Segoe UI", Arial, sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; direction: ltr; unicode-bidi: isolate; }
+  a { color: inherit; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 20px; }
+
+  header.top { padding: 52px 0 34px; }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--ink-faint); font-size: 14px; text-decoration: none;
+    margin-bottom: 20px;
+  }
+  .back-link:hover { color: var(--accent); }
+  header.top h1 { font-size: clamp(26px, 4.6vw, 34px); font-weight: 800; margin: 0 0 14px; }
+  header.top p { color: var(--ink-soft); font-size: 16px; max-width: 62ch; margin: 0 0 22px; }
+
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 11px 18px; border-radius: 10px;
+    font-size: 14.5px; font-weight: 600; text-decoration: none;
+    border: 1px solid transparent; cursor: pointer;
+    transition: transform .12s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); }
+  .btn.ghost { background: transparent; border-color: var(--border); color: var(--ink); }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.small { padding: 7px 13px; font-size: 13px; }
+
+  main { padding-bottom: 60px; }
+
+  section.group { margin-top: 40px; }
+  section.group h2 {
+    font-size: 13px; font-weight: 700; letter-spacing: .06em;
+    color: var(--ink-faint); text-transform: uppercase;
+    margin: 0 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+  }
+
+  .grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    box-shadow: var(--shadow);
+  }
+  .card-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap; margin-bottom: 4px;
+  }
+  .card-head h3 { font-size: 18px; font-weight: 700; margin: 0; }
+  .kind-badge {
+    font-size: 11px; font-weight: 600;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--accent);
+    border-radius: 999px; padding: 3px 10px; white-space: nowrap;
+  }
+  .card p.desc { color: var(--ink-soft); font-size: 14.5px; margin: 10px 0 14px; }
+  .card p.trigger { color: var(--ink-faint); font-size: 13px; margin: 0 0 14px; }
+  .card p.trigger b { color: var(--ink-soft); font-weight: 600; }
+  .card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .install-box {
+    background: var(--code-bg); border-radius: 12px; padding: 18px 20px;
+    margin-top: 28px; font-size: 14px;
+  }
+  .install-box h3 { margin: 0 0 10px; font-size: 15px; }
+  .install-box code {
+    display: block; font-family: "JetBrains Mono", monospace; direction: ltr;
+    unicode-bidi: isolate; text-align: left; font-size: 13px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 12px; margin: 8px 0; overflow-x: auto;
+  }
+  .note {
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    border-radius: 12px; padding: 16px 18px; margin-top: 28px; font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 26px 0 44px; text-align: center;
+    color: var(--ink-faint); font-size: 13px;
+  }
+  footer a { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header class="top wrap">
+  <a class="back-link" href="../">← חזרה לדף הראשי</a>
+  <h1>סקילים וסוכנים ל-Claude Code</h1>
+  <p>חמישה סקילים וארבעה סוכנים (subagents) מותאמים אישית, שנבנו תוך כדי ניהול כמה כלי תוכנה במקביל - לא בתכנון מראש, אלא אחרי שאותה בדיקה ידנית חזרה על עצמה שלוש-ארבע פעמים. חינם, בלי חשבון, קוד פתוח.</p>
+  <div class="hero-actions">
+    <a class="btn primary" href="https://github.com/ofirshudari1-ship-it/claude-tools/archive/refs/heads/main.zip">⬇ הורדת הכל (ZIP)</a>
+    <a class="btn ghost" href="https://github.com/ofirshudari1-ship-it/claude-tools">צפייה ב-GitHub</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="group">
+    <h2>סקילים (Skills)</h2>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="mono">release-checklist</h3>
+          <span class="kind-badge">Skill</span>
+        </div>
+        <p class="desc">מריץ בדיקת שחרור-גרסה לפני כל build: מוודא שמספר הגרסה מסונכרן בכל מקום שהוא צריך להופיע (קובץ הגרסה, שם קובץ ההתקנה, מסך About, יומן שינויים), שההתקנה נבנתה מחדש בפועל ולא נשארה עותק ישן, ושתיקיית הפרויקט נקייה משאריות build. אם לכלי הספציפי יש checklist משלו - עוקב אחריו; אם לא, נופל לכללי סנכרון גלובליים.</p>
+        <p class="trigger"><b>מופעל על:</b> "מוכן לשחרור", "בדוק לפני release", "גרסה חדשה", "לפני שאני מוציא installer"</p>
+        <div class="card-actions">
+          <a class="btn ghost small" href="https://github.com/ofirshudari1-ship-it/claude-tools/blob/main/skills/release-checklist/SKILL.md">צפייה בקובץ</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="mono">grep-audit-callers</h3>
+          <span class="kind-badge">Skill</span>
+        </div>
+        <p class="desc">לפני שינוי בפונקציה, מודול או API משותף: ממפה קודם את כל הקוראים בעץ הפרויקט המלא (לא רק בקובץ שבו נמצאת ההגדרה), מסווג כל אחד (לא צריך שינוי / צריך עדכון / קוד מת), ומדווח את הרשימה המלאה לפני שנוגעים בקוד. השיטה הזו חשפה 3 באגים אמיתיים ב-3 סבבים נפרדים בפרויקט אמיתי - לא שיטה תיאורטית.</p>
+        <p class="trigger"><b>מופעל על:</b> "לשנות פונקציה", "refactor", "מי קורא לפונקציה הזו", "שינוי API משותף"</p>
+        <div class="card-actions">
+          <a class="btn ghost small" href="https://github.com/ofirshudari1-ship-it/claude-tools/blob/main/skills/grep-audit-callers/SKILL.md">צפייה בקובץ</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="mono">secrets-hygiene-check</h3>
+          <span class="kind-badge">Skill</span>
+        </div>
+        <p class="desc">בדיקת אפס-secrets לפני commit או release: סורק את קוד המקור (בלי node_modules/dist/build) לתבניות נפוצות של מפתחות API, טוקנים, סיסמאות וחיבורי מסד נתונים, מוודא ש-.gitignore מכסה קבצי סביבה ופרטי גישה, ובודק שהקונפיג באמת נטען ממשתני סביבה ולא קשיח בקוד. כל ממצא חייב ציטוט קובץ+שורה אמיתי; דבר לא ודאי מסומן ⚠️ לבדיקה ידנית ולא נקבע כוודאי.</p>
+        <p class="trigger"><b>מופעל על:</b> "בדוק secrets", "לפני commit", "חשש לדליפת מפתח", "בדיקת אבטחה לפני שחרור"</p>
+        <div class="card-actions">
+          <a class="btn ghost small" href="https://github.com/ofirshudari1-ship-it/claude-tools/blob/main/skills/secrets-hygiene-check/SKILL.md">צפייה בקובץ</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="mono">daily-project-brief</h3>
+          <span class="kind-badge">Skill</span>
+        </div>
+        <p class="desc">תקציר מצב קצר על כל הכלים בתיקיית עבודה שיש בה כמה פרויקטים: מה תקוע, מה מיושן, מה דורש תשומת לב - עד 5-7 שורות ממוקדות, בלי audit מלא. מבוסס על מסמך סטטוס מרכזי וקבצי גרסה/יומן שינויים של כל כלי. כשמשהו דורש בדיקה מעמיקה יותר, מפנה לסוכן audit נפרד במקום לבצע אותו בעצמו.</p>
+        <p class="trigger"><b>מופעל על:</b> "מה מצב הפרויקטים", "daily brief", "מה תקוע", "סטטוס כל הכלים"</p>
+        <div class="card-actions">
+          <a class="btn ghost small" href="https://github.com/ofirshudari1-ship-it/claude-tools/blob/main/skills/daily-project-brief/SKILL.md">צפייה בקובץ</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="mono">system-upgrade</h3>
+          <span class="kind-badge">Skill</span>
+        </div>
+        <p class="desc">הגדול מבין כולם. תהליך שדרוג מקצה-לקצה לאפליקציית web, Electron או תוסף Chrome קיים: מדרג את המערכת ב-10 ממדים (RTL/עברית, רספונסיביות, נגישות WCAG 2.2, איכות עיצוב, UX ו-states, טפסים, ביצועים נתפסים, קלות הגדרה, שכבת AI, ובריאות קוד ה-UI) באמצעות סקריפט זיהוי דטרמיניסטי ובדיקה חיה בדפדפן - לא רק קריאת קוד. מפיק דוח לפני/אחרי ותוכנית ספרינטים עם יעדים מדידים, מבצע אותה עם commit וצילומי מסך לכל ספרינט, ומעביר את התוצאה למעריך נפרד וסקפטי (ראו agent upgrade-evaluator למטה) במקום לבדוק את עצמו. כולל חומר רקע לכל אחד מ-10 הממדים ותבניות דוח/תוכנית מוכנות.</p>
+        <p class="trigger"><b>מופעל על:</b> "תשדרג את המערכת", "המערכת מבולגנת", "תקן RTL/מובייל", "audit UX"</p>
+        <div class="card-actions">
+          <a class="btn ghost small" href="https://github.com/ofirshudari1-ship-it/claude-tools/tree/main/skills/system-upgrade">צפייה בתיקייה</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="group">
+    <h2>סוכנים (Agents)</h2>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="mono">system-upgrader</h3>
+          <span class="kind-badge">Agent</span>
+        </div>
+        <p class="desc">חצי המבצע של תהליך system-upgrade (טוען את הסקיל הזה). סורק מערכת קיימת ומשדרג אותה מקצה לקצה - RTL/עברית, מובייל/דסקטופ, נגישות, עיצוב לא-גנרי, UX/states/טפסים, קלות הגדרה, שכבת AI. מריץ את הבדיקה הדטרמיניסטית ובדיקה חיה בדפדפן, מתעדף ממצאים, ומתקן בספרינטים עם commit וצילומי לפני/אחרי. תמיד רץ יחד עם upgrade-evaluator - אף פעם לא סוכן שמעריך את השדרוג של עצמו.</p>
+        <div class="card-actions">
+          <a class="btn ghost small" href="https://github.com/ofirshudari1-ship-it/claude-tools/blob/main/agents/system-upgrader.md">צפייה בקובץ</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="mono">upgrade-evaluator</h3>
+          <span class="kind-badge">Agent</span>
+        </div>
+        <p class="desc">מעריך נפרד וסקפטי לתוצאות system-upgrader, שרץ ב-context נקי בלי לראות את ההנמקות של הסוכן שביצע את השדרוג (וזו בדיוק הנקודה - מודל שמעריך את העבודה של עצמו נוטה לתת ציון גבוה מדי). קורא את התוכנית והדוח, מריץ את הבדיקה הדטרמיניסטית מחדש, פותח את האפליקציה החיה בדפדפן, בודק כל יעד ספרינט בפועל, ונותן ציון 1-10 לכל אחד מ-10 הממדים עם ראיות. Read-only לגמרי - אף פעם לא נוגע בקוד.</p>
+        <div class="card-actions">
+          <a class="btn ghost small" href="https://github.com/ofirshudari1-ship-it/claude-tools/blob/main/agents/upgrade-evaluator.md">צפייה בקובץ</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="mono">page-upgrader</h3>
+          <span class="kind-badge">Agent</span>
+        </div>
+        <p class="desc">כמו system-upgrader, אבל ממוקד בעמוד או מודול בודד (למשל /calendar, /settings) במקום באפליקציה שלמה. מוסיף שלב מחקר ייעודי - מה עמוד מהסוג הזה אמור לכלול בכלל - לפני שמזהה מה חסר, ואז משדרג עיצוב ו-UX למובייל ולדסקטופ בנפרד, ומוודא ש-tsc/eslint/build עוברים לפני commit. טוען גם הוא את סקיל system-upgrade לכללי הבסיס.</p>
+        <div class="card-actions">
+          <a class="btn ghost small" href="https://github.com/ofirshudari1-ship-it/claude-tools/blob/main/agents/page-upgrader.md">צפייה בקובץ</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3 class="mono">tool-standards-audit</h3>
+          <span class="kind-badge">Agent</span>
+        </div>
+        <p class="desc">מבצע audit מלא לכלי אחד מתוך תיקיית עבודה עם כמה פרויקטים, מול מסמך סטנדרטים מרכזי - בודק את הקוד בפועל עכשיו (לא מעתיק טענות מ-audit קודם בלי לאמת אותן מחדש), כולל ניקיון שורש, סנכרון גרסאות, אפס secrets, RTL/i18n, שפת ומיקום התקנה, single-instance, DPI, והסרה נקייה. כל שורה בדוח חייבת ציטוט קובץ+שורה אמיתי; ❓ עדיף על ניחוש. מעדכן את קובץ ה-audit של הכלי ואת טבלת הסטטוס המשותפת.</p>
+        <div class="card-actions">
+          <a class="btn ghost small" href="https://github.com/ofirshudari1-ship-it/claude-tools/blob/main/agents/tool-standards-audit.md">צפייה בקובץ</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="install-box">
+    <h3>איך מתקינים</h3>
+    <p>מעתיקים את הקובץ (או את כל התיקייה, אצל <span class="mono">system-upgrade</span>) לתוך תיקיית ההגדרות של Claude Code:</p>
+    <code>~/.claude/skills/&lt;שם&gt;/          ← זמין בכל פרויקט<br>~/.claude/agents/&lt;שם&gt;.md       ← זמין בכל פרויקט</code>
+    <p>או, כדי שיהיה זמין רק בפרויקט ספציפי אחד:</p>
+    <code>&lt;הפרויקט&gt;/.claude/skills/&lt;שם&gt;/<br>&lt;הפרויקט&gt;/.claude/agents/&lt;שם&gt;.md</code>
+    <p style="margin-bottom:0">בלי build, בלי התקנת חבילות - קבצי Markdown פשוטים (וסקריפט Python אחד בלי תלויות חיצוניות בתוך <span class="mono">system-upgrade</span>).</p>
+  </div>
+
+  <div class="note">
+    <b>הערה:</b> שלושה מהסקילים/סוכנים (<span class="mono">release-checklist</span>, <span class="mono">daily-project-brief</span>, <span class="mono">tool-standards-audit</span>) נכתבו במקור מול מבנה תיקיות אישי ספציפי. המנגנון עצמו - בדיקת סנכרון גרסה, מיפוי קוראים לפני עריכה, סירוב להעריך שדרוג של עצמך - כללי ושימושי לכל פרויקט; שמות הנתיבים בשלושת אלה הם דוגמה לעבודה, לא תלות קשיחה.
+  </div>
+
+</main>
+
+<footer>
+  <p>קוד פתוח, ללא אחריות. שאלות/בעיות: <a href="https://github.com/ofirshudari1-ship-it/claude-tools/issues">issues בריפו</a>.</p>
+</footer>
+
+</body>
+</html>
