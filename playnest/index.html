@@ -2,9 +2,45 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0d0f14">
     <title>Playnest — Your Game Library, the Way It Should Be</title>
     <meta name="description" content="Playnest scans your PC, merges every game and app into one library, and ships a handful of gaming tools — each one doing something real on your machine, no fake data.">
+    <link rel="canonical" href="https://ofirshudari1-ship-it.github.io/playnest/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Playnest">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Playnest — Your Game Library, the Way It Should Be">
+    <meta property="og:description" content="Playnest scans your PC, merges every game and app into one library, and ships a handful of gaming tools — each one doing something real on your machine, no fake data.">
+    <meta property="og:url" content="https://ofirshudari1-ship-it.github.io/playnest/">
+    <meta property="og:image" content="https://ofirshudari1-ship-it.github.io/playnest/assets/marketing/hero.webp">
+    <meta property="og:image:width" content="1000">
+    <meta property="og:image:height" content="1000">
+    <meta property="og:image:alt" content="A neat grid of game covers in one unified library, replacing scattered duplicate installers">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Playnest — Your Game Library, the Way It Should Be">
+    <meta name="twitter:description" content="One library for every game on your PC. Local, no account, no telemetry.">
+    <meta name="twitter:image" content="https://ofirshudari1-ship-it.github.io/playnest/assets/marketing/hero.webp">
+    <meta name="twitter:image:alt" content="A neat grid of game covers in one unified library, replacing scattered duplicate installers">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Playnest",
+      "description": "Playnest scans your PC, merges every game and app into one library, and ships a handful of gaming tools that read and write real data on your machine.",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Windows 10, Windows 11",
+      "url": "https://ofirshudari1-ship-it.github.io/playnest/",
+      "image": "https://ofirshudari1-ship-it.github.io/playnest/assets/marketing/hero.webp",
+      "downloadUrl": "https://github.com/ofirshudari1-ship-it/playnest/releases/latest",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,14 +52,16 @@
             --border: #2d3447;
             --text: #f0f3f8;
             --text-dim: #a0aab8;
-            --text-faint: #6a7381;
+            --text-faint: #8b95a5;
             --accent: #7c5cff;
             --accent-2: #22d3c5;
             --success: #34d399;
         }
 
+        html { scroll-padding-top: 84px; }
+
         html, body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
@@ -33,7 +71,24 @@
         a { color: inherit; }
 
         /* Navigation */
-        nav {
+        .skip-link {
+            position: absolute;
+            inset-inline-start: 12px;
+            top: -100px;
+            z-index: 2000;
+            background: var(--accent-2);
+            color: #08090c;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .skip-link:focus { top: 12px; }
+
+        :focus-visible { outline: 3px solid var(--accent-2); outline-offset: 3px; border-radius: 4px; }
+        .btn:focus-visible { outline-color: #fff; }
+
+        .site-nav {
             position: fixed;
             top: 0;
             width: 100%;
@@ -56,7 +111,7 @@
             background-clip: text;
         }
 
-        nav .links a {
+        .site-nav .links a {
             color: var(--text-dim);
             text-decoration: none;
             margin-inline-start: 28px;
@@ -64,16 +119,7 @@
             transition: color 0.2s;
         }
 
-        nav .links a:hover { color: var(--accent-2); }
-
-        .lang-switch {
-            color: var(--text-dim) !important;
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            padding: 5px 14px;
-            font-size: 13px;
-        }
-        .lang-switch:hover { color: var(--accent-2) !important; border-color: var(--accent-2); }
+        .site-nav .links a:hover { color: var(--accent-2); }
 
         .btn {
             display: inline-block;
@@ -101,7 +147,7 @@
         }
         .btn-ghost:hover { background: rgba(34, 211, 197, 0.1); }
 
-        section { padding: 100px 60px; }
+        main > section { padding: 100px 60px; }
         .section-eyebrow {
             text-align: center;
             color: var(--accent-2);
@@ -162,6 +208,14 @@
             margin: 0 auto 40px;
         }
         .hero-buttons { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+        .hero-image { max-width: 480px; margin: 24px auto 0; }
+        .hero-image img { width: 100%; height: auto; border-radius: 16px; display: block; }
+        .btn-lg { padding: 16px 40px; font-size: 17px; }
+        .cta-section .hero-note { margin-top: 18px; }
+        .sub-narrow { max-width: 640px; margin: 0 auto 20px; }
+        .sub-narrow:last-child { margin-bottom: 0; }
+        code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 4px; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
         .hero-note { margin-top: 20px; color: var(--text-faint); font-size: 13px; }
 
         /* Problem section */
@@ -281,147 +335,162 @@
         footer a { text-decoration: none; color: var(--text-dim); }
         footer a:hover { color: var(--accent-2); }
 
+        @media (max-width: 480px) {
+            .btn { width: 100%; text-align: center; }
+            .footer-links { gap: 16px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { transition: none !important; animation: none !important; }
+            .btn-primary:hover, .feature-card:hover { transform: none; }
+        }
+
         @media (max-width: 768px) {
-            nav { padding: 14px 24px; }
-            nav .links { display: none; }
-            section { padding: 64px 24px; }
-            .hero { padding: 90px 24px 64px; }
+            .site-nav { padding: 12px 16px; gap: 8px; flex-wrap: wrap; }
+            .site-nav .links a { margin-inline-start: 14px; font-size: 14px; }
+            html { scroll-padding-top: 110px; }
+            .hero { margin-top: 96px; }
+            main > section { padding: 64px 24px; }
+            .hero { padding: 60px 24px 64px; }
             .hero h1 { font-size: 38px; }
             .hero p.lede { font-size: 17px; }
             .section-title { font-size: 30px; }
             .honesty-row { flex-direction: column; }
         }
     </style>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-    <nav>
-        <div class="logo">🎮 Playnest</div>
-        <div class="links">
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="site-nav">
+        <div class="logo"><span aria-hidden="true">🎮</span> Playnest</div>
+        <nav class="links" aria-label="Primary">
             <a href="#features">Tools</a>
             <a href="#honesty">What we cut, and why</a>
             <a href="#download">Download</a>
-            <a class="lang-switch" href="index.he.html">עברית</a>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-    <section class="hero">
-        <div class="hero-badge">✓ 0 telemetry · 0 accounts · Everything local</div>
-        <h1>Your game library,<br><span>without the clutter</span></h1>
+    <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+        <p class="hero-badge">✓ 0 telemetry · 0 accounts · Everything local</p>
+        <h1 id="hero-title">Your game library,<br><span>without the clutter</span></h1>
         <p class="lede">
             Playnest scans your PC and merges every game from Steam, Epic, and manual
             installs into one library — then quietly removes the installer files and
             duplicates a regular scanner would happily list as games.
         </p>
         <div class="hero-buttons">
-            <a class="btn btn-primary" data-gh-download="playnest" href="https://github.com/ofirshudari1-ship-it/playnest/releases/latest">⬇ Download Playnest — Free</a>
-            <a class="btn btn-ghost" href="https://github.com/ofirshudari1-ship-it/playnest#readme" target="_blank" rel="noopener">📄 Read the technical README ↗</a>
+            <a class="btn btn-primary" data-gh-download="playnest" href="https://github.com/ofirshudari1-ship-it/playnest/releases/latest"><span aria-hidden="true">⬇</span> Download Playnest — Free</a>
+            <a class="btn btn-ghost" href="https://github.com/ofirshudari1-ship-it/playnest#readme" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">📄</span> Read the technical README <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
         </div>
         <p class="hero-note">Windows 10/11 · <span data-gh-size="playnest">~76MB</span> · No account, no sign-up</p>
-        <div style="max-width:480px;margin:24px auto 0;">
-            <img src="assets/marketing/hero.webp" alt="A neat grid of game covers in one unified library, replacing scattered duplicate installers" style="width:100%;height:auto;border-radius:16px;display:block;" loading="lazy">
+        <div class="hero-image">
+            <img src="assets/marketing/hero.webp" alt="A neat grid of game covers in one unified library, replacing scattered duplicate installers" width="1000" height="1000" decoding="async" fetchpriority="high">
         </div>
     </section>
 
-    <section class="problem">
-        <div class="section-eyebrow">The Problem</div>
-        <h2 class="section-title">Every game library is a mess, by design</h2>
+    <section class="problem" aria-labelledby="problem-title">
+        <p class="section-eyebrow">The Problem</p>
+        <h2 class="section-title" id="problem-title">Every game library is a mess, by design</h2>
         <p class="section-sub">Steam only knows about Steam. Epic only knows about Epic. Nobody knows about everything else.</p>
         <div class="problem-grid">
             <div class="problem-card">
-                <div class="icon">📦</div>
+                <div class="icon" aria-hidden="true">📦</div>
                 <h3>Installer files shown as games</h3>
                 <p>Naive scanners list the setup.exe or uninstaller instead of the game itself — click it, and you get an install wizard, not your game.</p>
             </div>
             <div class="problem-card">
-                <div class="icon">🪞</div>
+                <div class="icon" aria-hidden="true">🪞</div>
                 <h3>Duplicates everywhere</h3>
                 <p>The same install shows up in the Windows registry and in a folder scan — without real dedup, one game shows up two or three times.</p>
             </div>
             <div class="problem-card">
-                <div class="icon">🐌</div>
+                <div class="icon" aria-hidden="true">🐌</div>
                 <h3>Slow loads because of artwork</h3>
                 <p>Fetching cover art means a network call per item — if the library waits on that, the whole app feels stuck.</p>
             </div>
             <div class="problem-card">
-                <div class="icon">🎭</div>
+                <div class="icon" aria-hidden="true">🎭</div>
                 <h3>"Gaming tools" that are just skins</h3>
                 <p>Plenty of similar apps bolt on "Discord integration" or "RGB control" that's really just made-up numbers with no real connection to your system.</p>
             </div>
         </div>
     </section>
 
-    <section id="how-it-works" class="problem">
-        <div class="section-eyebrow">How It Works</div>
-        <h2 class="section-title">Three steps, no account, no cloud</h2>
+    <section id="how-it-works" class="problem" aria-labelledby="how-title">
+        <p class="section-eyebrow">How It Works</p>
+        <h2 class="section-title" id="how-title">Three steps, no account, no cloud</h2>
         <p class="section-sub">Playnest runs locally on your machine only. No server, no syncing, no account to sign into.</p>
         <div class="problem-grid">
             <div class="problem-card">
-                <div class="icon">1️⃣</div>
+                <div class="icon" aria-hidden="true">1️⃣</div>
                 <h3>Scan</h3>
                 <p>During the initial setup wizard, Playnest scans Steam, Epic, the Windows registry, and install folders — filtering out setup/uninstall files and duplicates automatically.</p>
             </div>
             <div class="problem-card">
-                <div class="icon">2️⃣</div>
+                <div class="icon" aria-hidden="true">2️⃣</div>
                 <h3>One unified library</h3>
                 <p>Every game and app lands in a single view with covers, search, and filters — and clicking launches the actual game, not the installer.</p>
             </div>
             <div class="problem-card">
-                <div class="icon">3️⃣</div>
+                <div class="icon" aria-hidden="true">3️⃣</div>
                 <h3>Stays up to date on its own</h3>
                 <p>A periodic background scan automatically picks up anything new you install, and app updates download in the background via GitHub Releases — no need to come back to this page.</p>
             </div>
         </div>
     </section>
 
-    <section id="features">
-        <div class="section-eyebrow">The Solution</div>
-        <h2 class="section-title">Tools that do something real — no more, no less</h2>
+    <section id="features" aria-labelledby="features-title">
+        <p class="section-eyebrow">The Solution</p>
+        <h2 class="section-title" id="features-title">Tools that do something real — no more, no less</h2>
         <p class="section-sub">Every tool here reads or writes something real on your machine. If we couldn't wire a feature to something real, it didn't make the list.</p>
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon">🗂️</div>
+                <div class="feature-icon" aria-hidden="true">🗂️</div>
                 <h3>Smart Library</h3>
                 <p>Scans Steam, Epic, the Windows registry, and manual installs — with real filtering of installer files and duplicates.</p>
                 <span class="real-tag">✓ Real scanner</span>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🚀</div>
+                <div class="feature-icon" aria-hidden="true">🚀</div>
                 <h3>Performance Mode</h3>
                 <p>One page, two real switches: toggling Windows Game Mode in the registry, and switching power plans (power saver / balanced / performance) via powercfg.</p>
                 <span class="real-tag">✓ Real registry + powercfg</span>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🔥</div>
+                <div class="feature-icon" aria-hidden="true">🔥</div>
                 <h3>Streak Tracker</h3>
                 <p>Counts the days you actually launched something through Playnest — not a random number, a real activity log.</p>
                 <span class="real-tag">✓ Real usage data</span>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">⚡</div>
+                <div class="feature-icon" aria-hidden="true">⚡</div>
                 <h3>System Monitor</h3>
                 <p>Live CPU, memory, and temperature straight from your machine's real sensors — no invented FPS.</p>
                 <span class="real-tag">✓ Real hardware sensors</span>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">📊</div>
+                <div class="feature-icon" aria-hidden="true">📊</div>
                 <h3>Analytics & Insights</h3>
                 <p>Playtime, genre breakdowns, and recommendations — all calculated from your actual library, not a sample.</p>
                 <span class="real-tag">✓ Real data from your library</span>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🔄</div>
+                <div class="feature-icon" aria-hidden="true">🔄</div>
                 <h3>Automatic background scanning</h3>
                 <p>Set it once (daily/weekly/never) and your library updates itself whenever you install something new — no need to reopen the scan wizard.</p>
                 <span class="real-tag">✓ Local background scanning</span>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">⌨️</div>
+                <div class="feature-icon" aria-hidden="true">⌨️</div>
                 <h3>Global keyboard shortcut</h3>
                 <p><code>Ctrl+Shift+L</code> brings Playnest to the front with search focused, from anywhere on your PC — no hunting for the window.</p>
                 <span class="real-tag">✓ Works across all apps</span>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🔲</div>
+                <div class="feature-icon" aria-hidden="true">🔲</div>
                 <h3>Library display density</h3>
                 <p>Compact / Comfortable / Large — choose how many cards fit on screen, just like Steam.</p>
                 <span class="real-tag">✓ Saved per user</span>
@@ -429,9 +498,9 @@
         </div>
     </section>
 
-    <section id="honesty" class="honesty">
-        <div class="section-eyebrow">Full Transparency</div>
-        <h2 class="section-title">A previous version had fake tools. We removed them.</h2>
+    <section id="honesty" class="honesty" aria-labelledby="honesty-title">
+        <p class="section-eyebrow">Full Transparency</p>
+        <h2 class="section-title" id="honesty-title">A previous version had fake tools. We removed them.</h2>
         <p class="section-sub">Version 3.1.0 shipped 9 "gaming tools" that turned out to be UI only — with no real connection to the system. Instead of leaving them in as decoration, we deleted them outright.</p>
         <div class="honesty-wrap">
             <div class="honesty-row">
@@ -453,9 +522,9 @@
         </div>
     </section>
 
-    <section class="stats">
-        <div class="section-eyebrow">By the Numbers</div>
-        <h2 class="section-title">Honest about what's here</h2>
+    <section class="stats" aria-labelledby="stats-title">
+        <p class="section-eyebrow">By the Numbers</p>
+        <h2 class="section-title" id="stats-title">Honest about what's here</h2>
         <div class="stats-grid">
             <div class="stat-box"><div class="stat-number">8</div><div class="stat-label">tools, one category</div></div>
             <div class="stat-box"><div class="stat-number">1</div><div class="stat-label">network call (cover art only)</div></div>
@@ -464,9 +533,9 @@
         </div>
     </section>
 
-    <section id="auto-update" class="honesty">
-        <div class="section-eyebrow">Automatic Updates</div>
-        <h2 class="section-title">Updates itself — no need to come back here</h2>
+    <section id="auto-update" class="honesty" aria-labelledby="update-title">
+        <p class="section-eyebrow">Automatic Updates</p>
+        <h2 class="section-title" id="update-title">Updates itself — no need to come back here</h2>
         <p class="section-sub">Starting with version 3.4.4, Playnest automatically checks in the background for a new version on the project's GitHub Releases (electron-updater — the same update technology most serious Electron apps use).</p>
         <div class="honesty-wrap">
             <div class="honesty-row">
@@ -484,34 +553,34 @@
         </div>
     </section>
 
-    <section id="version-history" class="stats">
-        <div class="section-eyebrow">Version History</div>
-        <h2 class="section-title">What changed, version by version</h2>
-        <p class="section-sub" style="max-width: 640px; margin: 0 auto 20px;">
+    <section id="version-history" class="stats" aria-labelledby="history-title">
+        <p class="section-eyebrow">Version History</p>
+        <h2 class="section-title" id="history-title">What changed, version by version</h2>
+        <p class="section-sub sub-narrow">
             v3.4.4 — real automatic updates via electron-updater ·
             v3.4.3 — real welcome/finish pages in the setup wizard + branded-color button ·
             v3.4.2 — setup wizard with branded graphics ·
             v3.4.1 and below — stability, dedup, and scan fixes.
         </p>
-        <p class="section-sub" style="max-width: 640px; margin: 0 auto;">
-            <a href="https://github.com/ofirshudari1-ship-it/playnest/releases" target="_blank" rel="noopener">Full release history on GitHub ↗</a>
+        <p class="section-sub sub-narrow">
+            <a href="https://github.com/ofirshudari1-ship-it/playnest/releases" target="_blank" rel="noopener noreferrer">Full release history on GitHub <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
         </p>
     </section>
 
-    <section id="download" class="cta-section">
-        <h2>Your library, finally organized</h2>
+    <section id="download" class="cta-section" aria-labelledby="download-title">
+        <h2 id="download-title">Your library, finally organized</h2>
         <p>Free, local, no account. Download it, run the setup wizard, and your library appears within seconds.</p>
-        <a class="btn btn-primary" style="padding: 16px 40px; font-size: 17px;" data-gh-download="playnest" href="https://github.com/ofirshudari1-ship-it/playnest/releases/latest">⬇ Download Playnest <span data-gh-version="playnest">v3.18.0</span></a>
-        <p class="hero-note" style="margin-top: 18px;">Windows 10/11 · <span data-gh-size="playnest">~76MB</span> installer</p>
+        <a class="btn btn-primary btn-lg" data-gh-download="playnest" href="https://github.com/ofirshudari1-ship-it/playnest/releases/latest"><span aria-hidden="true">⬇</span> Download Playnest <span data-gh-version="playnest">v3.18.0</span></a>
+        <p class="hero-note">Windows 10/11 · <span data-gh-size="playnest">~76MB</span> installer</p>
     </section>
+    </main>
 
     <footer>
-        <div class="footer-links">
-            <a href="https://github.com/ofirshudari1-ship-it/playnest#readme" target="_blank" rel="noopener">README</a>
-            <a href="https://github.com/ofirshudari1-ship-it/playnest/releases" target="_blank" rel="noopener">Releases</a>
-            <a href="https://github.com/ofirshudari1-ship-it/playnest" target="_blank" rel="noopener">Source on GitHub</a>
-            <a href="index.he.html">עברית</a>
-        </div>
+        <nav class="footer-links" aria-label="Project links">
+            <a href="https://github.com/ofirshudari1-ship-it/playnest#readme" target="_blank" rel="noopener noreferrer">README</a>
+            <a href="https://github.com/ofirshudari1-ship-it/playnest/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+            <a href="https://github.com/ofirshudari1-ship-it/playnest" target="_blank" rel="noopener noreferrer">Source on GitHub</a>
+        </nav>
         <p>&copy; 2026 Playnest Software.</p>
     </footer>
     <script src="../latest-release.js"></script>

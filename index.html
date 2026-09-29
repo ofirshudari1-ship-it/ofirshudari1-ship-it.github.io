@@ -1,226 +1,162 @@
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>הכלים של אופיר</title>
-<meta name="description" content="ארבעה כלי Windows קטנים: OptiGuard לניקוי מחשב עם הוכחות, Playnest לספריית משחקים מסודרת, TapAct להעתקה חכמה, ו-SnapCap ללכידת ועריכת צילומי מסך. הורדה ישירה, בלי חשבון.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Ofir's Tools - Small Windows Utilities</title>
+<meta name="description" content="Four small Windows tools: OptiGuard for provable PC cleanup, Playnest for a tidy game library, TapAct for smart copy actions, and SnapCap for screenshot capture and editing. Direct download, no account.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#5b56e0">
+<link rel="canonical" href="https://ofirshudari1-ship-it.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%235b56e0'/%3E%3Cpath d='M20 22l-10 10 10 10M44 22l10 10-10 10M36 16l-8 32' fill='none' stroke='%23fff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ofir's Tools">
+<meta property="og:title" content="Ofir's Tools - Small Windows Utilities">
+<meta property="og:description" content="Four small Windows tools: OptiGuard for provable PC cleanup, Playnest for a tidy game library, TapAct for smart copy actions, and SnapCap for screenshot capture and editing. Direct download, no account.">
+<meta property="og:url" content="https://ofirshudari1-ship-it.github.io/">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ofir's Tools - Small Windows Utilities">
+<meta name="twitter:description" content="Four small Windows tools: OptiGuard for provable PC cleanup, Playnest for a tidy game library, TapAct for smart copy actions, and SnapCap for screenshot capture and editing. Direct download, no account.">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Ofir's Tools","url":"https://ofirshudari1-ship-it.github.io/","inLanguage":"en"},{"@type":"ItemList","name":"Windows tools","itemListElement":[{"@type":"ListItem","position":1,"name":"OptiGuard","url":"https://ofirshudari1-ship-it.github.io/optiguard/"},{"@type":"ListItem","position":2,"name":"Playnest","url":"https://ofirshudari1-ship-it.github.io/playnest/"},{"@type":"ListItem","position":3,"name":"TapAct","url":"https://ofirshudari1-ship-it.github.io/tapact/"},{"@type":"ListItem","position":4,"name":"SnapCap","url":"https://ofirshudari1-ship-it.github.io/snapcap/"}]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
 <style>
   :root {
-    --bg: #f5f6fa;
-    --surface: #ffffff;
-    --border: #e2e5ee;
-    --ink: #1a1d29;
-    --ink-soft: #565b70;
-    --ink-faint: #8a90a6;
-    --accent: #5b56e0;
-    --accent-ink: #ffffff;
+    --bg: #f5f6fa; --surface: #ffffff; --border: #dcdfe9;
+    --ink: #1a1d29; --ink-soft: #4a4f64; --ink-faint: #5f657c;
+    --accent: #5b56e0; --accent-ink: #ffffff; --code-bg: #eef0f7;
     --shadow: 0 1px 2px rgba(20,20,40,.04), 0 10px 26px rgba(20,20,40,.06);
     --radius: 16px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #101219;
-      --surface: #171a24;
-      --border: #262a38;
-      --ink: #eef0f6;
-      --ink-soft: #a8adc0;
-      --ink-faint: #6f7488;
-      --accent: #8a86ff;
-      --accent-ink: #10101c;
+      --bg: #101219; --surface: #171a24; --border: #2a2e3e;
+      --ink: #eef0f6; --ink-soft: #b0b5c8; --ink-faint: #969bb0;
+      --accent: #8a86ff; --accent-ink: #10101c; --code-bg: #1d2130;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px rgba(0,0,0,.4);
     }
   }
-
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: "Rubik", "Segoe UI", Arial, sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; direction: ltr; unicode-bidi: isolate; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Rubik", "Segoe UI", Arial, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace; }
   a { color: inherit; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
-
-  header.top {
-    padding: 56px 0 40px;
-    text-align: center;
-  }
-  header.top h1 {
-    font-size: clamp(28px, 5vw, 38px);
-    font-weight: 800;
-    margin: 0 0 12px;
-  }
-  header.top p {
-    color: var(--ink-soft);
-    font-size: 16.5px;
-    max-width: 46ch;
-    margin: 0 auto;
-  }
-
-  main { padding-bottom: 72px; }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  @media (max-width: 640px) {
-    .grid { grid-template-columns: 1fr; }
-  }
-
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 26px;
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .card-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .card-head h2 {
-    font-size: 21px;
-    font-weight: 700;
-    margin: 0;
-  }
-  .ver-badge {
-    font-size: 12px;
-    font-weight: 600;
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
-    color: var(--accent);
-    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
-    border-radius: 999px;
-    padding: 3px 10px;
-    white-space: nowrap;
-  }
-  .card p.desc {
-    color: var(--ink-soft);
-    font-size: 14.5px;
-    margin: 0;
-    flex: 1;
-  }
-  .card-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 4px;
-  }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 16px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: transform .12s ease, opacity .12s ease;
-  }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .skip { position: absolute; inset-inline-start: 12px; top: -60px; z-index: 10; background: var(--accent); color: var(--accent-ink); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+  .skip:focus { top: 12px; }
+  .wrap { max-width: 980px; margin-inline: auto; padding-inline: 20px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 10px 18px; border-radius: 10px; font-size: 14.5px; font-weight: 600; text-decoration: none; border: 1px solid transparent; transition: transform .12s ease; }
   .btn:hover { transform: translateY(-1px); }
   .btn.primary { background: var(--accent); color: var(--accent-ink); }
   .btn.ghost { background: transparent; border-color: var(--border); color: var(--ink); }
   .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 28px 0 44px;
-    text-align: center;
-    color: var(--ink-faint);
-    font-size: 13px;
-  }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
+  .card p.desc { color: var(--ink-soft); font-size: 15px; margin: 0; }
+  footer { border-top: 1px solid var(--border); padding: 28px 0 44px; text-align: center; color: var(--ink-faint); font-size: 13.5px; }
   footer a { text-decoration: underline; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+  header.top { padding: 56px 0 40px; text-align: center; }
+  header.top h1 { font-size: clamp(28px, 5vw, 38px); font-weight: 800; line-height: 1.2; margin: 0 0 12px; }
+  header.top p { color: var(--ink-soft); font-size: 16.5px; max-width: 52ch; margin: 0 auto; }
+  main { padding-bottom: 72px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; list-style: none; margin: 0; padding: 0; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  .tool { display: flex; flex-direction: column; gap: 14px; }
+  .tool .desc { flex: 1; }
+  .card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 32px; }
+  .card-head h3 { font-size: 21px; font-weight: 700; margin: 0; }
+  .ver-badge { font-size: 12px; font-weight: 600; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); border-radius: 999px; padding: 3px 10px; white-space: nowrap; min-width: 4.5rem; text-align: center; }
+  .card-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .cc { margin-top: 44px; }
+  .cc h2 { font-size: 13px; font-weight: 700; letter-spacing: .06em; color: var(--ink-faint); text-transform: uppercase; margin: 0 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .cc .card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .cc .text { flex: 1; min-width: 220px; }
+  .cc h3 { font-size: 19px; margin: 0 0 6px; }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 
 <header class="top wrap">
-  <h1>הכלים של אופיר</h1>
-  <p>ארבעה כלים קטנים ל-Windows שכתבתי לעצמי, ומשתף כאן כדי שגם חברים יוכלו להוריד. כל כלי מוריד ישר מהגרסה האחרונה ב-GitHub, בלי חשבון ובלי הרשמה.</p>
+  <h1>Ofir's Tools</h1>
+  <p>Four small Windows tools I wrote for myself and am sharing here so friends can download them too. Each one downloads straight from its latest GitHub release, with no account and no sign-up.</p>
 </header>
 
-<main class="wrap">
-  <div class="grid">
-
-    <div class="card">
+<main id="main" class="wrap">
+  <section aria-labelledby="tools-h">
+    <h2 id="tools-h" class="visually-hidden">Windows tools</h2>
+    <ul class="grid">
+    <li class="card tool">
       <div class="card-head">
-        <h2>OptiGuard</h2>
-        <span class="ver-badge mono" data-gh-version="optiguard">v4.18.0</span>
+        <h3>OptiGuard</h3>
+        <span class="ver-badge mono" data-gh-version="optiguard" title="Latest release">v4.18.0</span>
       </div>
-      <p class="desc">מנקה מחשב שסורק בעיות אמיתיות וניתנות להוכחה במקום להמציא מספר שגיאות, עם ביטול של 7 ימים על כל פעולה.</p>
+      <p class="desc">A PC cleaner that scans for real, provable problems instead of inventing an error count, with a 7-day undo on every action.</p>
       <div class="card-actions">
-        <a class="btn primary" data-gh-download="optiguard" href="https://github.com/ofirshudari1-ship-it/optiguard/releases/latest">הורדה</a>
-        <a class="btn ghost" href="optiguard/">לפרטים נוספים</a>
+        <a class="btn primary" data-gh-download="optiguard" href="https://github.com/ofirshudari1-ship-it/optiguard/releases/latest" aria-label="Download OptiGuard for Windows">Download</a>
+        <a class="btn ghost" href="optiguard/" aria-label="More about OptiGuard">Learn more</a>
       </div>
-    </div>
-
-    <div class="card">
+    </li>
+    <li class="card tool">
       <div class="card-head">
-        <h2>Playnest</h2>
-        <span class="ver-badge mono" data-gh-version="playnest">v3.18.0</span>
+        <h3>Playnest</h3>
+        <span class="ver-badge mono" data-gh-version="playnest" title="Latest release">v3.18.0</span>
       </div>
-      <p class="desc">מאחד את כל המשחקים והתוכנות שלך, מ-Steam, מ-Epic ומהתקנות ידניות, לספרייה אחת ומסנן קבצי התקנה וכפילויות.</p>
+      <p class="desc">Brings all your games and apps from Steam, Epic and manual installs into one library, and filters out installers and duplicates.</p>
       <div class="card-actions">
-        <a class="btn primary" data-gh-download="playnest" href="https://github.com/ofirshudari1-ship-it/playnest/releases/latest">הורדה</a>
-        <a class="btn ghost" href="playnest/">לפרטים נוספים</a>
+        <a class="btn primary" data-gh-download="playnest" href="https://github.com/ofirshudari1-ship-it/playnest/releases/latest" aria-label="Download Playnest for Windows">Download</a>
+        <a class="btn ghost" href="playnest/" aria-label="More about Playnest">Learn more</a>
       </div>
-    </div>
-
-    <div class="card">
+    </li>
+    <li class="card tool">
       <div class="card-head">
-        <h2>TapAct</h2>
-        <span class="ver-badge mono" data-gh-version="tapact">v3.5.0</span>
+        <h3>TapAct</h3>
+        <span class="ver-badge mono" data-gh-version="tapact" title="Latest release">v3.5.0</span>
       </div>
-      <p class="desc">מזהה טלפון, מספר מעקב, כתובת או קישור שהעתקת, ופותח מיד את הפעולה הנכונה: וואטסאפ, מעקב משלוח, ניווט או הדפדפן.</p>
+      <p class="desc">Recognizes a copied phone number, tracking number, address or link and instantly opens the right action: WhatsApp, parcel tracking, navigation or the browser.</p>
       <div class="card-actions">
-        <a class="btn primary" data-gh-download="tapact" href="https://github.com/ofirshudari1-ship-it/tapact/releases/latest">הורדה</a>
-        <a class="btn ghost" href="tapact/">לפרטים נוספים</a>
+        <a class="btn primary" data-gh-download="tapact" href="https://github.com/ofirshudari1-ship-it/tapact/releases/latest" aria-label="Download TapAct for Windows">Download</a>
+        <a class="btn ghost" href="tapact/" aria-label="More about TapAct">Learn more</a>
       </div>
-    </div>
-
-    <div class="card">
+    </li>
+    <li class="card tool">
       <div class="card-head">
-        <h2>SnapCap</h2>
-        <span class="ver-badge mono" data-gh-version="snapcap">v1.14.0</span>
+        <h3>SnapCap</h3>
+        <span class="ver-badge mono" data-gh-version="snapcap" title="Latest release">v1.14.0</span>
       </div>
-      <p class="desc">לוכד ועורך צילומי מסך, עם OCR מקומי והסתרה אוטומטית של מידע רגיש לפני שמשתפים.</p>
+      <p class="desc">Captures and edits screenshots, with local OCR and automatic redaction of sensitive information before you share.</p>
       <div class="card-actions">
-        <a class="btn primary" data-gh-download="snapcap" href="https://github.com/ofirshudari1-ship-it/snapcap/releases/latest">הורדה</a>
-        <a class="btn ghost" href="snapcap/">לפרטים נוספים</a>
+        <a class="btn primary" data-gh-download="snapcap" href="https://github.com/ofirshudari1-ship-it/snapcap/releases/latest" aria-label="Download SnapCap for Windows">Download</a>
+        <a class="btn ghost" href="snapcap/" aria-label="More about SnapCap">Learn more</a>
       </div>
-    </div>
+    </li>
+    </ul>
+  </section>
 
-  </div>
-
-  <section style="margin-top:44px;">
-    <h2 style="font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ink-faint);text-transform:uppercase;margin:0 0 16px;padding-bottom:10px;border-bottom:1px solid var(--border);">כלים ל-Claude Code</h2>
-    <div class="card" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
-      <div style="flex:1;min-width:220px;">
-        <h2 style="font-size:19px;margin:0 0 6px;">סקילים וסוכנים מותאמים אישית</h2>
-        <p class="desc" style="margin:0;">חמישה סקילים וארבעה סוכנים ל-Claude Code, שנבנו תוך כדי ניהול הכלים שמופיעים למעלה. חינם, קוד פתוח.</p>
+  <section class="cc" aria-labelledby="cc-h">
+    <h2 id="cc-h">Tools for Claude Code</h2>
+    <div class="card">
+      <div class="text">
+        <h3>Custom skills and agents</h3>
+        <p class="desc">Five skills and four agents for Claude Code, built while maintaining the tools above. Free and open source.</p>
       </div>
-      <a class="btn primary" href="claude-tools/">לרשימה המלאה</a>
+      <a class="btn primary" href="claude-tools/">See the full list</a>
     </div>
   </section>
 </main>
 
 <footer>
-  <p>הכלים בעמוד הזה נבנו לשימוש אישי ומשותפים כמו שהם, בלי אחריות. כל אחד מהם קוד פתוח: קישור לריפו בעמוד הכלי עצמו.</p>
+  <div class="wrap">
+    <p>The tools on this page were built for personal use and are shared as-is, with no warranty. Each one is open source: the repository link is on the tool's own page.</p>
+  </div>
 </footer>
 
 <script src="latest-release.js"></script>

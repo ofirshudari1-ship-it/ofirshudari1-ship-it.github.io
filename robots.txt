@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ofirshudari1-ship-it.github.io/sitemap.xml

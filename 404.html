@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Page Not Found - Ofir's Tools</title>
+<meta name="description" content="The page you requested could not be found.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#5b56e0">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%235b56e0'/%3E%3Cpath d='M20 22l-10 10 10 10M44 22l10 10-10 10M36 16l-8 32' fill='none' stroke='%23fff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ofir's Tools">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>
+  :root {
+    --bg: #f5f6fa; --surface: #ffffff; --border: #dcdfe9;
+    --ink: #1a1d29; --ink-soft: #4a4f64; --ink-faint: #5f657c;
+    --accent: #5b56e0; --accent-ink: #ffffff; --code-bg: #eef0f7;
+    --shadow: 0 1px 2px rgba(20,20,40,.04), 0 10px 26px rgba(20,20,40,.06);
+    --radius: 16px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101219; --surface: #171a24; --border: #2a2e3e;
+      --ink: #eef0f6; --ink-soft: #b0b5c8; --ink-faint: #969bb0;
+      --accent: #8a86ff; --accent-ink: #10101c; --code-bg: #1d2130;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px rgba(0,0,0,.4);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Rubik", "Segoe UI", Arial, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .skip { position: absolute; inset-inline-start: 12px; top: -60px; z-index: 10; background: var(--accent); color: var(--accent-ink); padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+  .skip:focus { top: 12px; }
+  .wrap { max-width: 980px; margin-inline: auto; padding-inline: 20px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 10px 18px; border-radius: 10px; font-size: 14.5px; font-weight: 600; text-decoration: none; border: 1px solid transparent; transition: transform .12s ease; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); }
+  .btn.ghost { background: transparent; border-color: var(--border); color: var(--ink); }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
+  .card p.desc { color: var(--ink-soft); font-size: 15px; margin: 0; }
+  footer { border-top: 1px solid var(--border); padding: 28px 0 44px; text-align: center; color: var(--ink-faint); font-size: 13.5px; }
+  footer a { text-decoration: underline; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+  .nf { text-align: center; padding: 96px 0 72px; }
+  .nf .code { font-size: clamp(64px, 16vw, 120px); font-weight: 800; color: var(--accent); line-height: 1; margin: 0; }
+  .nf h1 { font-size: clamp(24px, 4vw, 32px); margin: 12px 0; }
+  .nf p { color: var(--ink-soft); max-width: 46ch; margin: 0 auto 28px; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<main id="main" class="wrap nf">
+  <p class="code mono" aria-hidden="true">404</p>
+  <h1>Page not found</h1>
+  <p>The page you were looking for does not exist or has moved. Head back to the home page to find the tools.</p>
+  <a class="btn primary" href="https://ofirshudari1-ship-it.github.io/">Back to the home page</a>
+</main>
+</body>
+</html>
