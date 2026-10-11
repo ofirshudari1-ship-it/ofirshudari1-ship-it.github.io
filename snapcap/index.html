@@ -258,7 +258,7 @@
     <div class="brand">
       <span class="brand-mark">S</span>
       <span class="brand-word">SnapCap</span>
-      <span class="ver-badge" data-gh-version="snapcap">v1.14.0</span>
+      <span class="ver-badge" data-gh-version="snapcap">v1.16.3</span>
     </div>
     <nav class="links">
       <a href="#why">Why SnapCap</a>
@@ -290,7 +290,7 @@
         <a class="btn primary" href="#install">⬇ Download for Windows</a>
         <a class="btn ghost" href="#features">See what it does ↓</a>
       </div>
-      <p class="hero-meta"><span data-gh-version="snapcap">v1.14.0</span> · Windows 10/11 · <span class="mono" data-gh-filename="snapcap">SnapCap-Setup-1.14.0.exe</span> · <span data-gh-size="snapcap">~140 MB</span></p>
+      <p class="hero-meta"><span data-gh-version="snapcap">v1.16.3</span> · Windows 10/11 · <span class="mono" data-gh-filename="snapcap">SnapCap-Setup-1.16.3.exe</span> · <span data-gh-size="snapcap">~140 MB</span></p>
       <div class="badge-row">
         <span class="mini-badge">🔒 Local OCR &amp; redaction</span>
         <span class="mini-badge">🌗 Auto dark/light</span>
@@ -518,15 +518,15 @@
     <div class="privacy-card">
       <div class="privacy-row">
         <span class="pi">🔄</span>
-        <div><h4>SnapCap checks GitHub for new releases on its own</h4><p>A few seconds after startup, a background check (never on the main thread, never blocking the UI) asks GitHub's public Releases API for the latest published version of <a href="https://github.com/ofirshudari1-ship-it/snapcap" target="_blank" rel="noopener">github.com/ofirshudari1-ship-it/snapcap</a> and compares it to the version you're running.</p></div>
+        <div><h4>SnapCap checks GitHub for new releases on its own</h4><p>A few seconds after startup, and then every 6 hours, a background check (never on the main thread, never blocking the UI) asks GitHub's public Releases API for the latest published version of <a href="https://github.com/ofirshudari1-ship-it/snapcap" target="_blank" rel="noopener">github.com/ofirshudari1-ship-it/snapcap</a> and compares it to the version you're running.</p></div>
       </div>
       <div class="privacy-row">
         <span class="pi">🔔</span>
-        <div><h4>A newer version shows a tray notification — that's it</h4><p>Click the notification to open the release page in your browser and grab the new installer yourself. Nothing downloads or installs automatically, and a failed check (offline, GitHub unreachable) never shows an error — it just quietly tries again next time.</p></div>
+        <div><h4>New versions download and install themselves</h4><p>The installer is downloaded in the background and verified (size, file type and the SHA-256 GitHub publishes for it). It is installed when no editor is open, or when you quit from the tray, and SnapCap restarts. Because SnapCap is installed for all users, Windows shows one permission prompt (UAC) per update. If anything fails you get an ordinary tray notification with a link to the release page, and a failed check (offline, GitHub unreachable) never shows an error.</p></div>
       </div>
       <div class="privacy-row">
         <span class="pi">⚙️</span>
-        <div><h4>Fully optional, and manual too</h4><p>Turn it off any time in Settings → Advanced ("Automatically check for updates"), or trigger a check on demand with the "Check for Updates Now" button right next to it.</p></div>
+        <div><h4>Fully optional, and manual too</h4><p>On by default. Turn it off any time in Settings → General ("Automatically download and install updates") to get a notification only, or trigger a check on demand from Settings → Advanced.</p></div>
       </div>
     </div>
   </div>
@@ -542,14 +542,14 @@
     <div class="dl-card">
       <div class="dl-icon">⬇</div>
       <div class="dl-info">
-        <h3>SnapCap <span data-gh-version="snapcap">v1.14.0</span> for Windows 10/11</h3>
-        <div class="path" data-gh-filename="snapcap">SnapCap-Setup-1.14.0.exe</div>
+        <h3>SnapCap <span data-gh-version="snapcap">v1.16.3</span> for Windows 10/11</h3>
+        <div class="path" data-gh-filename="snapcap">SnapCap-Setup-1.16.3.exe</div>
         <div class="facts"><span data-gh-size="snapcap">≈140 MB</span> · installs to <span class="mono">C:\Program Files\SnapCap</span> (falls back to a per-user folder if you skip admin rights) · no account needed</div>
       </div>
-      <a class="btn primary" data-gh-download="snapcap" href="https://github.com/ofirshudari1-ship-it/snapcap/releases/download/v1.14.0/SnapCap-Setup-1.14.0.exe">Download installer</a>
+      <a class="btn primary" data-gh-download="snapcap" href="https://github.com/ofirshudari1-ship-it/snapcap/releases/download/v1.16.3/SnapCap-Setup-1.16.3.exe">Download installer</a>
     </div>
     <ol class="install-steps">
-      <li>Run <span class="mono" data-gh-filename="snapcap">SnapCap-Setup-1.14.0.exe</span> and pick your language on the first screen (English/Hebrew).</li>
+      <li>Run <span class="mono" data-gh-filename="snapcap">SnapCap-Setup-1.16.3.exe</span> and pick your language on the first screen (English/Hebrew).</li>
       <li>Follow the setup wizard — a desktop shortcut and tray auto-start are offered as optional tasks.</li>
       <li>SnapCap opens automatically and drops an icon in the system tray — that's where it lives from here on.</li>
       <li>Optional: open Settings to turn on cloud AI features and add your own Anthropic API key, if you want them.</li>
@@ -567,6 +567,46 @@
     </div>
     <div>
       <div class="cl-item current">
+        <div class="cl-head"><span class="cl-ver">v1.16.3</span><span class="cl-date">2026-10-12</span></div>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">Updates now actually install themselves, on every existing PC too.</p>
+        <ul class="cl-list">
+          <li><b>Fixed</b>: the automatic-update setting was stuck on "off" in settings saved by older versions, and the silent installer could not start without a Windows permission prompt. Both are fixed; the setting is switched on once, and you can turn it off again in Settings.</li>
+          <li><b>Changed</b>: checks run a few seconds after launch and every 6 hours; the download is verified (size, file type, SHA-256) and installed when no editor is open, or when you quit from the tray. Windows asks for permission (UAC) once per update.</li>
+          <li><b>Fixed</b>: the installer removes the duplicate old "SnapCap" entry in Windows Apps, cleans leftover files from the previous version, and closes a running SnapCap before updating. Your settings and library are never touched.</li>
+        </ul>
+      </div>
+      <div class="cl-item">
+        <div class="cl-head"><span class="cl-ver">v1.16.2</span><span class="cl-date">2026-09-28</span></div>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">The first-run onboarding wizard's welcome page now has a real illustration instead of a plain gradient circle.</p>
+        <ul class="cl-list">
+          <li><b>Added</b>: a brand-matched illustration (camera aperture + lock, teal/blue) on the onboarding wizard's welcome page, in a white card above the "Welcome to SnapCap" title.</li>
+        </ul>
+      </div>
+      <div class="cl-item">
+        <div class="cl-head"><span class="cl-ver">v1.16.1</span><span class="cl-date">2026-09-28</span></div>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">"Automatically download and install updates" is now on by default, matching the other tools in this portfolio - a fresh install gets silent background updates without any extra step, no more relying on a tray notification you have to click through to a download page.</p>
+        <ul class="cl-list">
+          <li><b>Changed</b>: the auto-update setting (Settings → General) now defaults to on for new installs. If you already have SnapCap installed and previously left this off, your saved preference is untouched.</li>
+        </ul>
+      </div>
+      <div class="cl-item">
+        <div class="cl-head"><span class="cl-ver">v1.16.0</span><span class="cl-date">2026-09-26</span></div>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">The language you pick in the installer is now the language the app opens in — no more choosing English/Hebrew twice, and no OS-locale guessing. Plus a sweep for leftover hardcoded English text across the editor, main window, and onboarding.</p>
+        <ul class="cl-list">
+          <li><b>Added</b>: the installer now writes your chosen language directly into SnapCap's own settings file the moment install finishes, so the app opens in that language on first launch — without ever touching an existing user's saved preference on a reinstall or update.</li>
+          <li><b>Fixed</b> hardcoded English strings that stayed in English even when running in Hebrew: the Editor's window title, its entire tool panel and menu bar, several sidebar buttons and AI/OCR/redaction dialogs, the onboarding wizard's window title, and the crash/uninstall dialogs.</li>
+        </ul>
+      </div>
+      <div class="cl-item">
+        <div class="cl-head"><span class="cl-ver">v1.15.0</span><span class="cl-date">2026-09-26</span></div>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">Researched ShareX, Greenshot, and Snagit before picking what to build next. SnapCap already matched ShareX/Snagit on scrolling capture and pin-to-screen — the two real gaps were GIF recording and a dedicated color picker, both added now.</p>
+        <ul class="cl-list">
+          <li><b>Added</b> GIF recording: select a region, a small floating Stop button + timer records frames at a configurable rate (default 8 fps) for up to a configurable max length (default 15s, Settings → General), then saves one animated .gif.</li>
+          <li><b>Added</b> Color Picker: a magnified loupe follows your cursor anywhere on screen showing a live HEX/RGB readout — click to copy the color's HEX code to your clipboard.</li>
+          <li><b>Added</b> both as new tray menu items with their own configurable hotkeys (Ctrl+Shift+G for GIF, Ctrl+Alt+C for Color Picker).</li>
+        </ul>
+      </div>
+      <div class="cl-item">
         <div class="cl-head"><span class="cl-ver">v1.14.0</span><span class="cl-date">2026-09-25</span></div>
         <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">A clarity pass on Settings: every option that wasn't obvious from its name now has a short line underneath explaining what it actually does. The first-run wizard's language step now starts pre-selected for your Windows language instead of always defaulting to English.</p>
         <ul class="cl-list">
@@ -575,6 +615,10 @@
           <li><b>Changed</b>: the first-run wizard's language page now starts pre-selected to match your Windows display language, instead of always starting on English — you still confirm or change it with one click before continuing.</li>
         </ul>
       </div>
+
+<p style="font-size:13px;color:var(--ink-faint);margin:0 0 16px;">Showing the 5 most recent releases. <a href="https://github.com/ofirshudari1-ship-it/snapcap/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Full changelog on GitHub</a>, or expand below.</p>
+      <details>
+        <summary style="cursor:pointer;color:var(--accent-text);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.04em;margin:4px 0 20px;">Show 18 earlier releases (v1.13.0–v1.2.0)</summary>
       <div class="cl-item">
         <div class="cl-head"><span class="cl-ver">v1.13.0</span><span class="cl-date">2026-09-25</span></div>
         <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">A one-click "Export Diagnostics" button bundles your log file, version info, a redacted copy of your config, and basic system info into a single zip — for sending to support. Also: the installer wizard is now the last window to gain Windows High Contrast support, matching the rest of the app.</p>
@@ -604,9 +648,6 @@
           <li><b>Changed</b>: the installer wizard and splash screen now use a shared dark-blue palette instead of SnapCap's own teal/blue — the running app itself (tray, widget, Library, Editor) is unchanged.</li>
         </ul>
       </div>
-<p style="font-size:13px;color:var(--ink-faint);margin:0 0 16px;">Showing the 5 most recent releases. <a href="https://github.com/ofirshudari1-ship-it/snapcap/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Full changelog on GitHub</a>, or expand below.</p>
-      <details>
-        <summary style="cursor:pointer;color:var(--accent-text);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.04em;margin:4px 0 20px;">Show 14 earlier releases (v1.11.0–v1.2.0)</summary>
       <div class="cl-item">
         <div class="cl-head"><span class="cl-ver">v1.11.0</span><span class="cl-date">2026-09-23</span></div>
         <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">Closes the items the previous audit pass left open — real Hebrew/English text everywhere, a corrected uninstall registry location, and High Contrast support for first-run setup.</p>
@@ -756,7 +797,7 @@
     <div class="brand">
       <span class="brand-mark">S</span>
       <span class="brand-word">SnapCap</span>
-      <span class="ver-badge" data-gh-version="snapcap">v1.14.0</span>
+      <span class="ver-badge" data-gh-version="snapcap">v1.16.3</span>
     </div>
     <nav class="links">
       <a href="#why-he">למה SnapCap</a>
@@ -787,7 +828,7 @@
         <a class="btn primary" href="#install-he">⬇ הורדה ל-Windows</a>
         <a class="btn ghost" href="#features-he">לראות מה זה עושה ↓</a>
       </div>
-      <p class="hero-meta"><span data-gh-version="snapcap">v1.14.0</span> · Windows 10/11 · <span class="mono" data-gh-filename="snapcap">SnapCap-Setup-1.14.0.exe</span> · <span data-gh-size="snapcap">כ-140 MB</span></p>
+      <p class="hero-meta"><span data-gh-version="snapcap">v1.16.3</span> · Windows 10/11 · <span class="mono" data-gh-filename="snapcap">SnapCap-Setup-1.16.3.exe</span> · <span data-gh-size="snapcap">כ-140 MB</span></p>
       <div class="badge-row">
         <span class="mini-badge">🔒 OCR והסתרה מקומיים</span>
         <span class="mini-badge">🌗 כהה/בהיר אוטומטי</span>
@@ -1015,15 +1056,15 @@
     <div class="privacy-card">
       <div class="privacy-row">
         <span class="pi">🔄</span>
-        <div><h4>SnapCap בודק לבד ב-GitHub אם יש גרסה חדשה</h4><p>כמה שניות אחרי ההפעלה, בדיקה שרצה ברקע (אף פעם לא ב-thread הראשי, אף פעם לא חוסמת את הממשק) פונה ל-API הציבורי של GitHub Releases עבור <a href="https://github.com/ofirshudari1-ship-it/snapcap" target="_blank" rel="noopener">github.com/ofirshudari1-ship-it/snapcap</a> ומשווה מול הגרסה שרצה אצלכם.</p></div>
+        <div><h4>SnapCap בודק לבד ב-GitHub אם יש גרסה חדשה</h4><p>כמה שניות אחרי ההפעלה, ואחר כך כל 6 שעות, בדיקה שרצה ברקע (אף פעם לא ב-thread הראשי, אף פעם לא חוסמת את הממשק) פונה ל-API הציבורי של GitHub Releases עבור <a href="https://github.com/ofirshudari1-ship-it/snapcap" target="_blank" rel="noopener">github.com/ofirshudari1-ship-it/snapcap</a> ומשווה מול הגרסה שרצה אצלכם.</p></div>
       </div>
       <div class="privacy-row">
         <span class="pi">🔔</span>
-        <div><h4>גרסה חדשה מציגה התראת מגש — וזהו</h4><p>לוחצים על ההתראה כדי לפתוח את דף ה-release בדפדפן ולהוריד את המתקין החדש בעצמכם. שום דבר לא מתקין את עצמו אוטומטית, וכשל בבדיקה (בלי אינטרנט, GitHub לא זמין) אף פעם לא מציג שגיאה — הוא פשוט מנסה שוב בפעם הבאה.</p></div>
+        <div><h4>גרסאות חדשות מורידות ומתקינות את עצמן</h4><p>המתקין יורד ברקע ונבדק (גודל, סוג קובץ וה-SHA-256 ש-GitHub מפרסמת עבורו). הוא מותקן כשאין עורך פתוח, או כשסוגרים מהמגש, ואז SnapCap עולה מחדש. מכיוון ש-SnapCap מותקן לכל המשתמשים, Windows מציגה בקשת אישור אחת (UAC) בכל עדכון. אם משהו נכשל מופיעה התראת מגש רגילה עם קישור לדף ה-release, וכשל בבדיקה (בלי אינטרנט, GitHub לא זמין) אף פעם לא מציג שגיאה.</p></div>
       </div>
       <div class="privacy-row">
         <span class="pi">⚙️</span>
-        <div><h4>אופציונלי לגמרי, וגם ידני</h4><p>אפשר לכבות את זה בכל רגע בהגדרות ← מתקדם ("בדוק עדכונים אוטומטית"), או להריץ בדיקה בדרישה עם הכפתור "בדוק עדכונים עכשיו" ממש לידו.</p></div>
+        <div><h4>אופציונלי לגמרי, וגם ידני</h4><p>מופעל כברירת מחדל. אפשר לכבות בכל רגע בהגדרות ← כללי ("הורד והתקן עדכונים אוטומטית") ולקבל התראה בלבד, או להריץ בדיקה בדרישה מהגדרות ← מתקדם.</p></div>
       </div>
     </div>
   </div>
@@ -1039,14 +1080,14 @@
     <div class="dl-card">
       <div class="dl-icon">⬇</div>
       <div class="dl-info">
-        <h3>SnapCap <span data-gh-version="snapcap">v1.14.0</span> עבור Windows 10/11</h3>
-        <div class="path" data-gh-filename="snapcap">SnapCap-Setup-1.14.0.exe</div>
+        <h3>SnapCap <span data-gh-version="snapcap">v1.16.3</span> עבור Windows 10/11</h3>
+        <div class="path" data-gh-filename="snapcap">SnapCap-Setup-1.16.3.exe</div>
         <div class="facts"><span data-gh-size="snapcap">כ-140 MB</span> · מתקין ל-<span class="mono">C:\Program Files\SnapCap</span> (נופל לתיקיית משתמש אם מדלגים על הרשאות אדמין) · בלי צורך בחשבון</div>
       </div>
-      <a class="btn primary" data-gh-download="snapcap" href="https://github.com/ofirshudari1-ship-it/snapcap/releases/download/v1.14.0/SnapCap-Setup-1.14.0.exe">הורדת קובץ ההתקנה</a>
+      <a class="btn primary" data-gh-download="snapcap" href="https://github.com/ofirshudari1-ship-it/snapcap/releases/download/v1.16.3/SnapCap-Setup-1.16.3.exe">הורדת קובץ ההתקנה</a>
     </div>
     <ol class="install-steps">
-      <li>מריצים את <span class="mono" data-gh-filename="snapcap">SnapCap-Setup-1.14.0.exe</span> ובוחרים שפה במסך הראשון (אנגלית/עברית).</li>
+      <li>מריצים את <span class="mono" data-gh-filename="snapcap">SnapCap-Setup-1.16.3.exe</span> ובוחרים שפה במסך הראשון (אנגלית/עברית).</li>
       <li>עוברים את אשף ההתקנה — קיצור דרך לשולחן העבודה והפעלה אוטומטית במגש מוצעים כמשימות אופציונליות.</li>
       <li>SnapCap נפתח אוטומטית ומניח אייקון במגש המערכת — משם הוא פועל מעכשיו.</li>
       <li>אופציונלי: פותחים הגדרות כדי להפעיל פיצ'רי AI בענן ולהוסיף מפתח Anthropic API משלכם, אם רוצים בהם.</li>
@@ -1064,6 +1105,46 @@
     </div>
     <div>
       <div class="cl-item current">
+        <div class="cl-head"><span class="cl-ver">v1.16.3</span><span class="cl-date">2026-10-12</span></div>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">עדכונים מתקינים את עצמם בפועל, גם במחשבים שכבר מותקן בהם SnapCap.</p>
+        <ul class="cl-list">
+          <li><b>תוקן</b>: ההגדרה של עדכון אוטומטי נשארה "כבויה" בהגדרות שנשמרו בגרסאות ישנות, והמתקין השקט לא הצליח לעלות בלי חלון אישור של Windows. שניהם תוקנו; ההגדרה נדלקת פעם אחת, ואפשר לכבות אותה שוב בהגדרות.</li>
+          <li><b>שונה</b>: בדיקה כמה שניות אחרי ההפעלה ובכל 6 שעות; ההורדה נבדקת (גודל, סוג קובץ, SHA-256) ומותקנת כשאין עורך פתוח או כשסוגרים מהמגש. Windows מבקשת אישור (UAC) פעם אחת בכל עדכון.</li>
+          <li><b>תוקן</b>: המתקין מסיר את הרישום הכפול הישן של SnapCap ב-Windows, מנקה קבצים שנשארו מהגרסה הקודמת וסוגר SnapCap פתוח לפני העדכון. ההגדרות והספרייה שלכם לא נמחקות.</li>
+        </ul>
+      </div>
+      <div class="cl-item">
+        <div class="cl-head"><span class="cl-ver">v1.16.2</span><span class="cl-date">2026-09-28</span></div>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">בעמוד הפתיחה של אשף ההגדרה הראשונית יש כעת איור אמיתי במקום עיגול גרדיאנט פשוט.</p>
+        <ul class="cl-list">
+          <li><b>נוסף</b>: איור התואם למיתוג (עדשת מצלמה + מנעול, טורקיז-כחול) בעמוד הפתיחה של אשף ההגדרה הראשונית, בתוך כרטיס לבן מעל הכותרת "ברוכים הבאים ל-SnapCap".</li>
+        </ul>
+      </div>
+      <div class="cl-item">
+        <div class="cl-head"><span class="cl-ver">v1.16.1</span><span class="cl-date">2026-09-28</span></div>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">"הורד והתקן עדכונים אוטומטית" דלוק כעת כברירת מחדל, כמו בשאר הכלים בקבוצה הזו - התקנה חדשה מקבלת עדכונים שקטים ברקע בלי שלב נוסף, בלי להסתמך על התראה במגש שצריך ללחוץ עליה ולהגיע לעמוד הורדה.</p>
+        <ul class="cl-list">
+          <li><b>שונה</b>: הגדרת העדכון האוטומטי (הגדרות ← כללי) דלוקה כעת כברירת מחדל בהתקנות חדשות. אם SnapCap כבר מותקן אצלכם וכיביתם את זה בעבר, ההעדפה השמורה שלכם לא נפגעת.</li>
+        </ul>
+      </div>
+      <div class="cl-item">
+        <div class="cl-head"><span class="cl-ver">v1.16.0</span><span class="cl-date">2026-09-26</span></div>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">השפה שבוחרים באשף ההתקנה היא כעת השפה שבה האפליקציה נפתחת - בלי לבחור שפה פעמיים ובלי ניחוש לפי שפת Windows. בנוסף, מעבר על האפליקציה למציאת טקסטים באנגלית שנשארו קבועים בטעות.</p>
+        <ul class="cl-list">
+          <li><b>נוסף</b>: אשף ההתקנה כותב כעת את השפה שנבחרה ישירות לקובץ ההגדרות של SnapCap ברגע שההתקנה מסתיימת, כך שהאפליקציה נפתחת באותה שפה בהפעלה הראשונה - בלי לפגוע בהעדפה שמשתמש קיים כבר שמר, בהתקנה חוזרת או בעדכון.</li>
+          <li><b>תוקן</b> טקסט קבוע באנגלית שנשאר באנגלית גם בהרצה בעברית: כותרת חלון העורך, כל לוח הכלים ותפריט העליון שלו, כמה כפתורים בסרגל הצד וחלונות AI/OCR/טשטוש, כותרת חלון אשף ההתקנה הראשונית, וחלונות הקריסה/ההסרה.</li>
+        </ul>
+      </div>
+      <div class="cl-item">
+        <div class="cl-head"><span class="cl-ver">v1.15.0</span><span class="cl-date">2026-09-26</span></div>
+        <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">מחקר על ShareX, Greenshot ו-Snagit לפני שבחרנו מה לבנות. SnapCap כבר תואם ל-ShareX/Snagit בצילום גלילה ובהצמדה למסך - שני החוסרים האמיתיים היו הקלטת GIF ובורר צבעים ייעודי, ושניהם נוספו כעת.</p>
+        <ul class="cl-list">
+          <li><b>נוסף</b> הקלטת GIF: בוחרים אזור, כפתור עצירה צף קטן וטיימר מקליטים פריימים בקצב הניתן להגדרה (ברירת מחדל 8 fps) למשך מקסימלי הניתן להגדרה (ברירת מחדל 15 שניות, בהגדרות ← כללי), ואז שומרים קובץ GIF מונפש אחד.</li>
+          <li><b>נוסף</b> בורר צבעים: זכוכית מגדלת שעוקבת אחרי הסמן בכל מקום על המסך ומציגה קריאת HEX/RGB חייה - קליק מעתיק את קוד ה-HEX של הצבע ללוח.</li>
+          <li><b>נוסף</b> שני הפריטים כאפשרויות חדשות בתפריט מגש המערכת, עם קיצורי מקלדת ניתנים להגדרה (Ctrl+Shift+G להקלטת GIF, Ctrl+Alt+C לבורר הצבעים).</li>
+        </ul>
+      </div>
+      <div class="cl-item">
         <div class="cl-head"><span class="cl-ver">v1.14.0</span><span class="cl-date">2026-09-25</span></div>
         <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">מעבר על ההגדרות: לכל אפשרות שלא היתה ברורה משמה נוסף משפט קצר מתחתיה שמסביר מה היא בפועל עושה. שלב בחירת השפה בהגדרה הראשונית נבחר כעת מראש לפי שפת Windows שלך, במקום להתחיל תמיד באנגלית.</p>
         <ul class="cl-list">
@@ -1072,6 +1153,10 @@
           <li><b>שונה</b>: שלב השפה בהגדרה הראשונית מתחיל כעת עם בחירה מוצעת שמתאימה לשפת התצוגה של Windows שלך, במקום להתחיל תמיד באנגלית - עדיין ניתן לאשר או לשנות בלחיצה אחת לפני שממשיכים.</li>
         </ul>
       </div>
+
+<p style="font-size:13px;color:var(--ink-faint);margin:0 0 16px;">מוצגות 5 הגרסאות האחרונות. <a href="https://github.com/ofirshudari1-ship-it/snapcap/blob/main/CHANGELOG.md" target="_blank" rel="noopener">יומן השינויים המלא ב-GitHub</a>, או פותחים למטה.</p>
+      <details>
+        <summary style="cursor:pointer;color:var(--accent-text);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.04em;margin:4px 0 20px;">הצגת 18 גרסאות קודמות (v1.13.0–v1.2.0)</summary>
       <div class="cl-item">
         <div class="cl-head"><span class="cl-ver">v1.13.0</span><span class="cl-date">2026-09-25</span></div>
         <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">כפתור "ייצוא אבחון" בלחיצה אחת אוסף לקובץ zip יחיד את קובץ היומן שלך, פרטי הגרסה, עותק של ההגדרות שלך שבו כל פרט רגיש מוסתר, ומידע בסיסי על המערכת - לשליחה לתמיכה. בנוסף: אשף ההתקנה הוא כעת החלון האחרון שמקבל תמיכה ב-Windows High Contrast, בהתאמה לשאר האפליקציה.</p>
@@ -1101,9 +1186,6 @@
           <li><b>שונה</b>: אשף ההתקנה ומסך הפתיחה משתמשים כעת בפלטת כחול-כהה משותפת במקום הטורקיז-כחול של SnapCap עצמה - האפליקציה הפעילה עצמה (מגש המערכת, הווידג'ט, הספרייה, העורך) לא השתנתה.</li>
         </ul>
       </div>
-<p style="font-size:13px;color:var(--ink-faint);margin:0 0 16px;">מוצגות 5 הגרסאות האחרונות. <a href="https://github.com/ofirshudari1-ship-it/snapcap/blob/main/CHANGELOG.md" target="_blank" rel="noopener">יומן השינויים המלא ב-GitHub</a>, או פותחים למטה.</p>
-      <details>
-        <summary style="cursor:pointer;color:var(--accent-text);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.04em;margin:4px 0 20px;">הצגת 14 גרסאות קודמות (v1.11.0–v1.2.0)</summary>
       <div class="cl-item">
         <div class="cl-head"><span class="cl-ver">v1.11.0</span><span class="cl-date">2026-09-23</span></div>
         <p style="font-size:14.5px;color:var(--ink-soft);margin-bottom:8px;">סוגר את הפריטים שנשארו פתוחים מסבב הביקורת הקודם — טקסט אמיתי בעברית ובאנגלית בכל מקום, מיקום נכון לרישום ההסרה, ותמיכת High Contrast להגדרה הראשונית.</p>
@@ -1260,7 +1342,7 @@
   setSiteLang(saved === 'he' ? 'he' : 'en');
 })();
 </script>
-<script src="../latest-release.js"></script>
+<script src="latest-release.js"></script>
 
 </body>
 </html>
