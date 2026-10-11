@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<title>Relay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d1420;
+  --panel: #16213a;
+  --panel-2: #1b2a4a;
+  --line: #2a3d63;
+  --line-soft: #223256;
+  --orange: #ff7a3d;
+  --orange-dim: #c65a26;
+  --signal: #4ade80;
+  --text: #eef1f6;
+  --text-dim: #a9b4cc;
+  --text-faint: #6b7999;
+  --mono-tint: #0a0f1c;
+  --shadow: 0 20px 60px -20px rgba(0,0,0,0.6);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --ink: #eef1f6;
+    --panel: #ffffff;
+    --panel-2: #f4f6fb;
+    --line: #d8deeb;
+    --line-soft: #e3e8f2;
+    --text: #101826;
+    --text-dim: #48546b;
+    --text-faint: #8590a8;
+    --mono-tint: #0d1420;
+    --shadow: 0 20px 50px -24px rgba(20,30,60,0.25);
+  }
+}
+:root[data-theme="light"] {
+  --ink: #eef1f6;
+  --panel: #ffffff;
+  --panel-2: #f4f6fb;
+  --line: #d8deeb;
+  --line-soft: #e3e8f2;
+  --text: #101826;
+  --text-dim: #48546b;
+  --text-faint: #8590a8;
+  --mono-tint: #0d1420;
+  --shadow: 0 20px 50px -24px rgba(20,30,60,0.25);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: "IBM Plex Sans Hebrew", "IBM Plex Sans", -apple-system, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+h1, h2, h3 { text-wrap: balance; margin: 0; font-weight: 700; }
+
+::selection { background: var(--orange); color: #1a0a02; }
+
+/* ---- signal trace: the vertical line that threads the page ---- */
+.trace {
+  position: absolute;
+  right: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--line) 4%, var(--line) 96%, transparent);
+  z-index: 0;
+}
+.trace-node {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--orange) 18%, transparent);
+}
+
+main { position: relative; max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+/* ---- top bar ---- */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 24px;
+  background: color-mix(in srgb, var(--ink) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.brandmark { display: flex; align-items: center; gap: 10px; }
+.brandmark svg { width: 26px; height: 26px; }
+.brandmark span { font-weight: 700; font-size: 17px; letter-spacing: 0.01em; }
+.topnav { display: flex; gap: 22px; }
+.topnav a { color: var(--text-dim); text-decoration: none; font-size: 13.5px; font-weight: 500; }
+.topnav a:hover { color: var(--orange); }
+
+/* ---- hero ---- */
+.hero { padding: 76px 0 56px; position: relative; }
+.eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+}
+.eyebrow::before { content: ""; width: 16px; height: 1px; background: var(--orange); display: inline-block; }
+.hero h1 { font-size: clamp(32px, 5vw, 50px); line-height: 1.15; letter-spacing: -0.01em; }
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero p.lead { font-size: 17px; color: var(--text-dim); max-width: 58ch; margin: 22px 0 0; }
+
+/* ---- architecture diagram ---- */
+.diagram-wrap { margin-top: 48px; }
+.diagram-wrap svg { width: 100%; height: auto; display: block; }
+.diagram-caption { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--text-faint); margin-top: 10px; text-align: center; }
+
+/* ---- sections ---- */
+section.block { padding: 64px 0; position: relative; }
+.block-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 28px; }
+.block-num { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--text-faint); }
+.block h2 { font-size: clamp(24px, 3.4vw, 32px); }
+.block > p.intro { color: var(--text-dim); max-width: 62ch; font-size: 15.5px; margin: 0 0 30px; }
+
+/* ---- panel / card system: one shared surface, spent deliberately ---- */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+.panel-pad { padding: 24px; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+.direction-card { padding: 26px; }
+.direction-card .dir-label {
+  font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: 0.06em;
+  color: var(--orange); text-transform: uppercase; margin-bottom: 10px; display: block;
+}
+.direction-card h3 { font-size: 19px; margin-bottom: 10px; }
+.direction-card p { color: var(--text-dim); font-size: 14.5px; margin: 0 0 16px; }
+
+.code-block {
+  background: var(--mono-tint);
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: #cfe0ff;
+  overflow-x: auto;
+  direction: ltr;
+  text-align: left;
+  line-height: 1.65;
+}
+.code-block .k { color: #9ec2ff; }
+.code-block .s { color: #ffd39a; }
+.code-block .c { color: #6b7999; }
+
+.allow-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.allow-table th {
+  font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint);
+  text-align: right; padding: 0 0 10px; border-bottom: 1px solid var(--line);
+}
+.allow-table td { padding: 12px 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; color: var(--text-dim); }
+.allow-table td:first-child { font-family: "IBM Plex Mono", monospace; color: var(--text); white-space: nowrap; padding-left: 16px; }
+.allow-table tr:last-child td { border-bottom: none; }
+
+/* ---- security proof strip ---- */
+.proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+@media (max-width: 760px) { .proof-grid { grid-template-columns: repeat(2, 1fr); } }
+.proof-cell { background: var(--panel); padding: 22px 20px; }
+.proof-cell .proof-mark { color: var(--signal); margin-bottom: 12px; display: block; }
+.proof-cell .proof-mark svg { display: block; }
+.proof-cell strong { display: block; font-size: 14.5px; margin-bottom: 6px; }
+.proof-cell p { margin: 0; font-size: 13px; color: var(--text-dim); }
+
+/* ---- outcomes list ---- */
+.outcomes { display: flex; flex-direction: column; gap: 0; }
+.outcome-row {
+  display: grid; grid-template-columns: 30px 1fr; gap: 16px;
+  padding: 18px 0; border-bottom: 1px solid var(--line-soft);
+}
+.outcome-row:last-child { border-bottom: none; }
+.outcome-row .n { font-family: "IBM Plex Mono", monospace; color: var(--orange); font-size: 13px; padding-top: 2px; }
+.outcome-row strong { display: block; font-size: 15px; margin-bottom: 4px; }
+.outcome-row p { margin: 0; color: var(--text-dim); font-size: 14px; }
+
+/* ---- get started ---- */
+.steps { counter-reset: step; }
+.step { display: grid; grid-template-columns: 34px 1fr; gap: 16px; padding: 16px 0; }
+.step .bullet {
+  counter-increment: step; content: counter(step);
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid var(--line); display: flex; align-items: center; justify-content: center;
+  font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--text-dim);
+}
+.step .bullet::before { content: counter(step); }
+.step strong { display: block; font-size: 14.5px; margin-bottom: 3px; }
+.step p { margin: 0; color: var(--text-dim); font-size: 13.5px; }
+.step code { font-family: "IBM Plex Mono", monospace; background: var(--mono-tint); color: #cfe0ff; padding: 1px 6px; border-radius: 4px; font-size: 12px; direction: ltr; display: inline-block; }
+
+footer {
+  border-top: 1px solid var(--line-soft);
+  padding: 32px 0 44px;
+  color: var(--text-faint);
+  font-size: 12.5px;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+footer .mono { color: var(--text-faint); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { animation: rise 0.5s cubic-bezier(0.16,1,0.3,1) backwards; }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brandmark">
+    <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+      <rect width="128" height="128" rx="26" fill="var(--panel-2)"/>
+      <circle cx="32" cy="64" r="15" fill="var(--orange)"/>
+      <circle cx="96" cy="64" r="15" fill="var(--orange)" fill-opacity="0.38"/>
+      <circle cx="96" cy="64" r="15" fill="none" stroke="var(--orange)" stroke-width="3"/>
+      <path d="M48 64 H80" stroke="var(--text)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M74 52 L90 64 L74 76" fill="none" stroke="var(--text)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>Relay</span>
+  </div>
+  <nav class="topnav">
+    <a href="#gap">הבעיה</a>
+    <a href="#bridge">איך זה עובד</a>
+    <a href="#security">אבטחה</a>
+    <a href="#start">התקנה</a>
+  </nav>
+</div>
+
+<main>
+
+  <section class="hero">
+    <div class="eyebrow">Windows ↔ Make.com · תשתית מקומית</div>
+    <h1>ה-Enterprise Agent ש-Make<br>לא נתן לך — <em>בנית בעצמך.</em></h1>
+    <p class="lead">
+      Relay הוא שירות קטן שרץ במחשב שלך ומחבר בין תיקיות ה-Windows שלך לבין Make.com —
+      בשני הכיוונים — בלי תוכנית Enterprise, בלי שרת חיצוני, ובלי לפתוח אף פורט נכנס.
+    </p>
+
+    <div class="diagram-wrap reveal">
+      <svg viewBox="0 0 880 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="תרשים ארכיטקטורה: תיקייה מקומית מול Relay Agent מול Make.com">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--orange)"/>
+          </marker>
+        </defs>
+
+        <!-- box: local folder -->
+        <rect x="20" y="60" width="200" height="100" rx="12" fill="var(--panel)" stroke="var(--line)"/>
+        <text x="120" y="98" text-anchor="middle" fill="var(--text)" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="15" font-weight="600">המחשב שלך</text>
+        <text x="120" y="120" text-anchor="middle" fill="var(--text-dim)" font-family="IBM Plex Mono, monospace" font-size="11">C:\Reports\</text>
+        <text x="120" y="138" text-anchor="middle" fill="var(--text-faint)" font-family="IBM Plex Mono, monospace" font-size="10">chokidar watch</text>
+
+        <!-- box: relay agent -->
+        <rect x="340" y="40" width="200" height="140" rx="12" fill="var(--panel-2)" stroke="var(--orange)" stroke-width="1.5"/>
+        <text x="440" y="78" text-anchor="middle" fill="var(--text)" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="15" font-weight="700">Relay Agent</text>
+        <text x="440" y="98" text-anchor="middle" fill="var(--text-faint)" font-family="IBM Plex Mono, monospace" font-size="10">127.0.0.1:8743</text>
+        <text x="440" y="122" text-anchor="middle" fill="var(--text-dim)" font-family="IBM Plex Mono, monospace" font-size="10.5">token + allow-list</text>
+        <text x="440" y="140" text-anchor="middle" fill="var(--text-dim)" font-family="IBM Plex Mono, monospace" font-size="10.5">node.js · local only</text>
+
+        <!-- box: make.com -->
+        <rect x="660" y="60" width="200" height="100" rx="12" fill="var(--panel)" stroke="var(--line)"/>
+        <text x="760" y="98" text-anchor="middle" fill="var(--text)" font-family="IBM Plex Sans Hebrew, sans-serif" font-size="15" font-weight="600">Make.com</text>
+        <text x="760" y="120" text-anchor="middle" fill="var(--text-dim)" font-family="IBM Plex Mono, monospace" font-size="11">Scenario</text>
+        <text x="760" y="138" text-anchor="middle" fill="var(--text-faint)" font-family="IBM Plex Mono, monospace" font-size="10">webhook</text>
+
+        <!-- arrow forward: folder -> agent -> make -->
+        <line x1="220" y1="90" x2="336" y2="90" stroke="var(--orange)" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="278" y="80" text-anchor="middle" fill="var(--orange)" font-family="IBM Plex Mono, monospace" font-size="9.5">file created</text>
+
+        <line x1="540" y1="90" x2="656" y2="90" stroke="var(--orange)" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="598" y="80" text-anchor="middle" fill="var(--orange)" font-family="IBM Plex Mono, monospace" font-size="9.5">POST webhook</text>
+
+        <!-- arrow reverse: make -> agent -> folder (pull/poll) -->
+        <line x1="656" y1="140" x2="540" y2="140" stroke="var(--text-faint)" stroke-width="1.5" stroke-dasharray="3 4" marker-end="url(#arrow)"/>
+        <text x="598" y="156" text-anchor="middle" fill="var(--text-faint)" font-family="IBM Plex Mono, monospace" font-size="9.5">poll (pull)</text>
+
+        <line x1="336" y1="140" x2="220" y2="140" stroke="var(--text-faint)" stroke-width="1.5" stroke-dasharray="3 4" marker-end="url(#arrow)"/>
+        <text x="278" y="156" text-anchor="middle" fill="var(--text-faint)" font-family="IBM Plex Mono, monospace" font-size="9.5">allow-list only</text>
+      </svg>
+    </div>
+    <div class="diagram-caption">שני כיוונים, אותו ערוץ — אין פורט נכנס פתוח באף שלב</div>
+  </section>
+
+  <div style="position:relative;">
+  <div class="trace"></div>
+
+  <section class="block" id="gap">
+    <div class="trace-node" style="top: 40px;"></div>
+    <div class="block-head"><span class="block-num">01</span><h2>הפער</h2></div>
+    <p class="intro">
+      ל-Make.com אין דרך טבעית לדעת שמשהו קרה על המחשב שלך — ואין דרך זולה להריץ עליו פעולה.
+    </p>
+    <div class="panel panel-pad">
+      <p style="margin:0 0 12px; color:var(--text-dim); font-size:14.5px;">
+        Make מציעה <strong style="color:var(--text)">On-Premise Agent</strong> רשמי לתרחישים כאלה — אבל:
+      </p>
+      <div class="two-col">
+        <div>
+          <span class="mono" style="color:var(--orange); font-size:12px;">מגבלה 1</span>
+          <p style="margin:6px 0 0; font-size:14px; color:var(--text-dim);">זמין רק בתוכנית <strong style="color:var(--text)">Enterprise</strong> — לא בתוכניות הרגילות.</p>
+        </div>
+        <div>
+          <span class="mono" style="color:var(--orange); font-size:12px;">מגבלה 2</span>
+          <p style="margin:6px 0 0; font-size:14px; color:var(--text-dim);">גם כשיש אותו — הוא תומך רק במודול HTTP Agent גנרי. לא בצפייה בתיקיות, לא בהרצת פעולות מקומיות.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="bridge">
+    <div class="trace-node" style="top: 40px;"></div>
+    <div class="block-head"><span class="block-num">02</span><h2>שני כיוונים, ערוץ אחד</h2></div>
+    <p class="intro">Relay לא פותח שום דבר החוצה. שני הכיוונים יוצאים מהמחשב שלך.</p>
+
+    <div class="two-col">
+      <div class="panel direction-card">
+        <span class="dir-label">כיוון 1 — פעיל כברירת מחדל</span>
+        <h3>תיקייה → Make</h3>
+        <p>נוצר קובץ בתיקייה שסימנת — Relay שולח את הפרטים ל-webhook תוך שנייה וחצי.</p>
+        <div class="code-block"><span class="c">// POST אל ה-webhook שהגדרת</span>
+{
+  <span class="k">"event"</span>: <span class="s">"file_created"</span>,
+  <span class="k">"fileName"</span>: <span class="s">"invoice_4021.pdf"</span>,
+  <span class="k">"fullPath"</span>: <span class="s">"C:\\Reports\\invoice_4021.pdf"</span>,
+  <span class="k">"size"</span>: 88420,
+  <span class="k">"timestamp"</span>: <span class="s">"2026-09-13T09:12:04Z"</span>
+}</div>
+      </div>
+
+      <div class="panel direction-card">
+        <span class="dir-label">כיוון 2 — כבוי כברירת מחדל</span>
+        <h3>Make → תיקייה</h3>
+        <p>Relay <em style="color:var(--text); font-style:normal;">שואל</em> את Make כל כמה שניות אם יש פעולה ממתינה — Make אף פעם לא "דוחף" פנימה. אין פורט נכנס פתוח, אף פעם.</p>
+        <table class="allow-table">
+          <tr><th>פעולה</th><th>מותר רק</th></tr>
+          <tr><td>file.create</td><td>בתוך תיקייה מאושרת</td></tr>
+          <tr><td>file.move</td><td>שני הצדדים מאושרים</td></tr>
+          <tr><td>script.run</td><td>מזהה מוכר מראש — לא נתיב</td></tr>
+          <tr><td>notify.show</td><td>טקסט בלבד</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="security">
+    <div class="trace-node" style="top: 40px;"></div>
+    <div class="block-head"><span class="block-num">03</span><h2>מודל האבטחה, לא כאמונת אגב</h2></div>
+    <p class="intro">
+      זו לא הבטחה כללית — זה מה שקורה בפועל בכל בקשה, וזה מה שנבדק:
+      ניסיון לצאת מתיקייה מאושרת עם <span class="mono">"a" &amp; calc.exe &amp; "b"</span> נחסם באותה שורת קוד שבודקת נתיב תקין.
+    </p>
+    <div class="proof-grid">
+      <div class="proof-cell">
+        <span class="proof-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></span>
+        <strong>מקומי בלבד</strong>
+        <p>השרת מאזין רק על 127.0.0.1 — לא נגיש מרשת חיצונית, גם לא מרשת הבית.</p>
+      </div>
+      <div class="proof-cell">
+        <span class="proof-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="4"/><line x1="11" y1="12" x2="21" y2="12"/><line x1="17" y1="12" x2="17" y2="16"/><line x1="21" y1="12" x2="21" y2="16"/></svg></span>
+        <strong>טוקן סודי</strong>
+        <p>כל בקשה חייבת טוקן. אין אותו — סירוב. אפשר להחליף אותו בלחיצה, בכל רגע.</p>
+      </div>
+      <div class="proof-cell">
+        <span class="proof-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11 V7 a4 4 0 0 1 8 0 v4"/></svg></span>
+        <strong>Allow-list נעולה</strong>
+        <p>Make נוגע רק במה שאישרת בשמו המפורש. לא בנתיב חופשי. לא בפקודה חופשית. לעולם.</p>
+      </div>
+      <div class="proof-cell">
+        <span class="proof-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h9a4 4 0 0 0 .5-7.97A5.5 5.5 0 0 0 6.1 8.5 4 4 0 0 0 7 18Z"/><line x1="4" y1="4" x2="20" y2="20"/></svg></span>
+        <strong>שום דבר בענן</strong>
+        <p>הגדרות, לוג וטוקן נשמרים רק אצלך בדיסק. אין שרת מרכזי של Relay שרואה אותם.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="why">
+    <div class="trace-node" style="top: 40px;"></div>
+    <div class="block-head"><span class="block-num">04</span><h2>למה זה שווה להתקין</h2></div>
+    <div class="outcomes">
+      <div class="outcome-row">
+        <span class="n">/01</span>
+        <div><strong>בלי לשדרג ל-Enterprise</strong><p>אותה יכולת שה-On-Premise Agent הרשמי נותן — בלי לשלם על תוכנית שאתה לא צריך בשביל שאר העבודה.</p></div>
+      </div>
+      <div class="outcome-row">
+        <span class="n">/02</span>
+        <div><strong>Make מגיב לתיקיות שלך תוך שניות</strong><p>דוח שנשמר, קובץ שהופק, חשבונית שהודפסה — התרחיש ב-Make מתחיל מיד, בלי שתעשה כלום ידנית.</p></div>
+      </div>
+      <div class="outcome-row">
+        <span class="n">/03</span>
+        <div><strong>שליטה מלאה על מה ש-Make יכול לגעת בו</strong><p>אתה בוחר את התיקיות והסקריפטים, מזהה אחד בכל פעם — לא "גישה למחשב", אלא רשימה סגורה שאתה שולט בה.</p></div>
+      </div>
+      <div class="outcome-row">
+        <span class="n">/04</span>
+        <div><strong>רץ אצלך, בחינם, בלי חשבון</strong><p>קוד פתוח לך לקרוא, בלי טלמטריה, בלי שרת שצריך לשלם עליו — Node.js ותוסף כרום, זהו.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="start">
+    <div class="trace-node" style="top: 40px;"></div>
+    <div class="block-head"><span class="block-num">05</span><h2>להתקין</h2></div>
+    <p class="intro">חמש דקות, מהתיקייה עצמה. אין קובץ EXE: מורידים ZIP, מחלצים לתיקייה קבועה, ומריצים את המתקין (דורש Node.js 18 ומעלה). <a data-gh-download="relay" href="https://github.com/ofirshudari1-ship-it/relay/releases/latest">הורדת <span class="mono" data-gh-filename="relay">Relay-v1.4.0.zip</span></a></p>
+    <div class="panel panel-pad steps">
+      <div class="step"><span class="bullet"></span><div><strong>חלץ והרץ את המתקין</strong><p>לחיצה כפולה על <code>agent\install\Install-Relay.bat</code> — מתקין תלויות, מפעיל את הסוכן, יוצר הפעלה אוטומטית.</p></div></div>
+      <div class="step"><span class="bullet"></span><div><strong>טען את התוסף</strong><p><code>chrome://extensions</code> ← מצב מפתח ← Load unpacked ← תיקיית <code>chrome-extension</code>.</p></div></div>
+      <div class="step"><span class="bullet"></span><div><strong>חבר את השניים</strong><p>לחיצה ימנית על אייקון Relay במגש המערכת ← Copy Pairing Token ← הדבק בהגדרות התוסף.</p></div></div>
+      <div class="step"><span class="bullet"></span><div><strong>הגדר תיקייה ראשונה</strong><p>הדבק Webhook URL מ-Make, בחר תיקייה לצפייה — וזהו.</p></div></div>
+    </div>
+  </section>
+
+  </div>
+
+  <footer>
+    <span>Relay — <span class="mono" data-gh-version="relay">v1.4.0</span></span>
+    <span class="mono"><a href="https://github.com/ofirshudari1-ship-it/relay">github.com/ofirshudari1-ship-it/relay</a></span>
+  </footer>
+
+</main>
+
+<script src="../latest-release.js"></script>
+</body>
+</html>

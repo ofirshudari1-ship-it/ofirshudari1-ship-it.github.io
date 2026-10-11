@@ -50,6 +50,10 @@
     for (var i = 0; i < release.assets.length; i++) {
       if (/\.exe$/i.test(release.assets[i].name)) return release.assets[i];
     }
+    // Chrome-extension / folder-style tools publish a .zip instead of an .exe.
+    for (var j = 0; j < release.assets.length; j++) {
+      if (/\.zip$/i.test(release.assets[j].name)) return release.assets[j];
+    }
     return null;
   }
 
